@@ -21,11 +21,18 @@ public class BasicResolver implements Resolver {
 
     @Override
     public boolean isSupportedHost(String host) {
-        return hostResolverMap.containsKey(host);
+        synchronized (hostResolverMap) {
+            return hostResolverMap.containsKey(host);
+        }
     }
 
     @Override
-    public boolean addHostResolver(HostResolver hostResolver) {
+    public synchronized HostResolver removeResolver(String host) {
+        return hostResolverMap.remove(host);
+    }
+
+    @Override
+    public synchronized boolean addHostResolver(HostResolver hostResolver) {
         if (isSupportedHost(hostResolver.getHost())) {
             return false;
         }
@@ -34,10 +41,12 @@ public class BasicResolver implements Resolver {
     }
 
     @Override
-    public HostResolver replaceHostResolver(HostResolver hostResolver) {
-        HostResolver old = hostResolverMap.get(hostResolver.getHost());
-        hostResolverMap.put(hostResolver.getHost(), hostResolver);
-        return old;
+    public synchronized HostResolver replaceHostResolver(HostResolver hostResolver) {
+        synchronized (hostResolverMap) {
+            HostResolver old = hostResolverMap.get(hostResolver.getHost());
+            hostResolverMap.put(hostResolver.getHost(), hostResolver);
+            return old;
+        }
     }
 
     @Override
@@ -45,7 +54,7 @@ public class BasicResolver implements Resolver {
         if (isSupportedHost(hostResolver.getHost())) {
             return false;
         }
-        hostResolverMap.remove(hostResolver.getHost());
+        removeResolver(hostResolver.getHost());
         return true;
     }
 }

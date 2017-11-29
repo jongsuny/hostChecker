@@ -12,5 +12,7 @@ public interface Resolver {
 
     HostResolver replaceHostResolver(HostResolver hostResolver);
 
+    HostResolver removeResolver(String host);
+
     boolean removeHostResolver(HostResolver hostResolver);
 }

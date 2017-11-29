@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="headerCommonCss">
+    <link rel='stylesheet' href='/webjars/bootstrap/3.3.7/css/bootstrap.min.css' />
+    <link rel="stylesheet" th:href="@{/css/common.css?rv={buildNumber}(buildNumber=${buildNumber}?:'20170000')}" />
+    <link rel="stylesheet" href="/webjars/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/webjars/ionicons/2.0.1/css/ionicons.min.css" />
+    <link rel="stylesheet" href="/webjars/AdminLTE/2.3.8/plugins/jvectormap/jquery-jvectormap-1.2.2.css" />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/2.3.8/dist/css/AdminLTE.min.css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/2.3.8/dist/css/skins/_all-skins.min.css" />
+
+</head>
+
+<body>
+</body>
+</html>

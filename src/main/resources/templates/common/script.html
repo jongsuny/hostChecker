@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<th:block th:fragment="script_common">
+    <!-- jQuery -->
+    <script th:src="@{/webjars/AdminLTE/2.3.8/plugins/jQuery/jquery-2.2.3.min.js}"></script>
+    <script th:src="@{/webjars/AdminLTE/2.3.8/plugins/jQueryUI/jquery-ui.min.js}"></script>
+    <!-- Bootstrap -->
+    <script th:src="@{/webjars/AdminLTE/2.3.8/bootstrap/js/bootstrap.min.js}"></script>
+    <!-- AdminLTE App -->
+    <script th:src="@{/webjars/AdminLTE/2.3.8/dist/js/app.min.js}"></script>
+    <script type="text/javascript" src="/js/common/class.js"></script>
+    <script type="text/javascript" src="/js/common/commons.js"></script>
+</th:block>
+
+<th:block th:fragment="script_more">
+
+    <script src="/webjars/AdminLTE/2.3.8/plugins/fastclick/fastclick.js"></script>
+    <!-- Sparkline -->
+    <script src="/webjars/AdminLTE/2.3.8/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <!-- jvectormap  -->
+    <script src="/webjars/AdminLTE/2.3.8/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="/webjars/AdminLTE/2.3.8/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+    <!-- SlimScroll -->
+    <script src="/webjars/AdminLTE/2.3.8/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- ChartJS -->
+    <script src="/webjars/AdminLTE/2.3.8/plugins/chartjs/Chart.js"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <!--<script src="/webjars/AdminLTE/2.3.8/dist/js/pages/dashboard2.js"></script>-->
+    <!-- AdminLTE for demo purposes -->
+    <!--<script src="/webjars/AdminLTE/2.3.8/dist/js/demo.js"></script>-->
+</th:block>
+
+</body>
+</html>

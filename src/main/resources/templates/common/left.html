@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<th:block th:fragment="aside">
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <form action="#" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search..." />
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+                </div>
+            </form>
+            <!-- /.search form -->
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
+                <li class="header">Config</li>
+                <li class="treeview" th:classappend="${'useful' == currentDomain} ? 'active':''">
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> <span>Useful</span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="active"><a href="/pages/config/guide"><i class="fa fa-circle-o"></i> Guide</a></li>
+                        <li th:classappend="${'createService' == subMenu} ? 'active':''"><a href="/pages/config/newService"><i class="fa fa-circle-o"></i> Add service</a></li>
+                    </ul>
+                </li>
+                <li th:each="config : *{serviceConfigList}" class="treeview" th:classappend="${config.domain == currentDomain} ? 'active':''" th:title="${config.serviceName}">
+                    <a href="#">
+                        <i class="fa fa-files-o"></i>
+                        <span th:text="${config.domain}"></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li th:classappend="${'service' == subMenu} ? 'active':''"><a th:href="@{/pages/config/{service}/service(service=${config.domain})}"><i class="fa fa-circle-o"></i>ServiceConfig</a></li>
+                        <li th:classappend="${'group' == subMenu} ? 'active':''"><a th:href="@{/pages/config/{service}/group(service=${config.domain})}"><i class="fa fa-circle-o"></i>GroupConfig</a></li>
+                        <li th:classappend="${'checkpoint' == subMenu} ? 'active':''"><a th:href="@{/pages/config/{service}/checkpoint(service=${config.domain})}"><i class="fa fa-circle-o"></i>CheckPointConfig</a></li>
+                        <li th:classappend="${'job' == subMenu} ? 'active':''"><a th:href="@{/pages/config/{service}/job(service=${config.domain})}"><i class="fa fa-circle-o"></i>Job Config</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+    </aside>
+</th:block>
+
+<th:block th:fragment="script_more">
+    <!-- other scripts here -->
+</th:block>
+
+</body>
+</html>

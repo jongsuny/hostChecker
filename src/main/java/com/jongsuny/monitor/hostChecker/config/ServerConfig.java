@@ -4,6 +4,8 @@ import com.jongsuny.monitor.hostChecker.http.client.HostCheckClient;
 import com.jongsuny.monitor.hostChecker.http.dns.BaseDnsResolver;
 import com.jongsuny.monitor.hostChecker.http.resolver.BasicResolver;
 import com.jongsuny.monitor.hostChecker.http.resolver.Resolver;
+import com.jongsuny.monitor.hostChecker.validate.BasicValidator;
+import com.jongsuny.monitor.hostChecker.validate.Validator;
 import org.apache.http.conn.DnsResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,4 +31,8 @@ public class ServerConfig {
         Resolver resolver = new BasicResolver();
         return resolver;
     }
+//    @Bean
+//    public Validator getValidator(){
+//        return new BasicValidator();
+//    }
 }

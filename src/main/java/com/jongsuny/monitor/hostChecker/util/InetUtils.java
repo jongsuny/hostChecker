@@ -3,6 +3,7 @@ package com.jongsuny.monitor.hostChecker.util;
 import org.apache.commons.lang3.StringUtils;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.regex.Pattern;
 
 /**
@@ -54,6 +55,9 @@ public class InetUtils {
     }
 
     public static boolean isIPv4Address(final String input) {
+        if (input == null) {
+            return false;
+        }
         return IPV4_PATTERN.matcher(input).matches();
     }
 
@@ -85,4 +89,7 @@ public class InetUtils {
         return ip.matches(IPV4_PUBLIC_REG);
     }
 
+    public static InetAddress[] resolve(String host) throws UnknownHostException {
+        return InetAddress.getAllByName(host);
+    }
 }
