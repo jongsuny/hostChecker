@@ -1,6 +1,5 @@
 package com.jongsuny.monitor.hostChecker;
 
-import com.jongsuny.monitor.hostChecker.client.HostCheckingClient;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,15 +11,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 @Slf4j
 public class HostCheckerApplicationTests {
-    private HostCheckingClient client;
     @Before
     public void init() {
-        client = new HostCheckingClient();
+        log.info("{} init.", getClass());
     }
 
     @Test
     public void contextLoads() {
-        client
+        log.info("contextLoaded...");
     }
 
 }
