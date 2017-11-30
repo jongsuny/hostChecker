@@ -1,21 +1,21 @@
 package com.jongsuny.monitor.hostChecker.service.impl;
 
-import com.jongsuny.monitor.hostChecker.http.client.HostCheckClient;
+import com.jongsuny.monitor.hostChecker.http.ResponseWrapper;
+import com.jongsuny.monitor.hostChecker.http.client.RequestProcessor;
 import com.jongsuny.monitor.hostChecker.http.resolver.BasicHostResolver;
 import com.jongsuny.monitor.hostChecker.http.resolver.HostResolver;
 import com.jongsuny.monitor.hostChecker.http.resolver.Resolver;
 import com.jongsuny.monitor.hostChecker.service.HostChecker;
+import com.jongsuny.monitor.hostChecker.validate.Validator;
+import com.jongsuny.monitor.hostChecker.validate.critirea.Criteria;
+import com.jongsuny.monitor.hostChecker.validate.critirea.Operator;
+import com.jongsuny.monitor.hostChecker.validate.domain.ValidateEntry;
+import com.jongsuny.monitor.hostChecker.validate.domain.ValidateType;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.net.URI;
-import java.nio.charset.Charset;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -25,9 +25,11 @@ import java.util.List;
 @Slf4j
 public class HostCheckerImpl implements HostChecker {
     @Autowired
-    private HostCheckClient hostCheckClient;
+    private RequestProcessor requestProcessor;
     @Autowired
     private Resolver resolver;
+    @Autowired
+    private Validator validator;
 
     @Override
     public void validate(String url, String host, List<String> ipAddresses) {
@@ -36,25 +38,22 @@ public class HostCheckerImpl implements HostChecker {
         resolver.replaceHostResolver(hostResolver);
         for (String ip : ipAddresses) {
             log.info("checking host:{}, ip:{}", host, ip);
-            process(url);
+            ResponseWrapper responseWrapper = requestProcessor.process(url);
+
+            log.info("response:{}", responseWrapper);
+            ValidateEntry entry = new ValidateEntry();
+            entry.setHost(host);
+            entry.setIp(ip);
+            entry.setResponseWrapper(responseWrapper);
+            entry.setUrl(url);
+            Criteria criteria = new Criteria();
+            criteria.setDescription("test");
+            criteria.setName("test");
+            criteria.setOperator(Operator.CONTAINS);
+            criteria.setValidateType(ValidateType.RESPONSE_BODY);
+            criteria.setValue("html");
+            validator.validate(entry, Arrays.asList(criteria));
         }
     }
 
-    private void process(String url) {
-        HttpResponse response = null;
-        HttpEntity entity = null;
-        try {
-            HttpGet get = new HttpGet(url);
-            get.setURI(new URI(url));
-            response = hostCheckClient.getHttpClient().execute(get);
-            String result = IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset());
-            log.error("body: {}", result);
-        } catch (Exception e) {
-            //处理异常
-        } finally {
-            if (response != null) {
-                EntityUtils.consumeQuietly(response.getEntity());
-            }
-        }
-    }
 }
