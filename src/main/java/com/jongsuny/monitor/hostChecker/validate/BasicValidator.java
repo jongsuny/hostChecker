@@ -1,7 +1,7 @@
 package com.jongsuny.monitor.hostChecker.validate;
 
 import com.google.common.collect.Maps;
-import com.jongsuny.monitor.hostChecker.validate.critirea.Criteria;
+import com.jongsuny.monitor.hostChecker.domain.validation.Validation;
 import com.jongsuny.monitor.hostChecker.validate.critirea.EvaluateType;
 import com.jongsuny.monitor.hostChecker.validate.domain.ValidateEntry;
 import com.jongsuny.monitor.hostChecker.validate.evaluate.Evaluator;
@@ -23,8 +23,8 @@ public class BasicValidator implements Validator {
     }
 
     @Override
-    public void validate(ValidateEntry validateEntry, List<Criteria> criteriaList) {
-        criteriaList.forEach(criteria -> {
+    public void validate(ValidateEntry validateEntry, List<Validation> validationList) {
+        validationList.forEach(criteria -> {
             Evaluator evaluator = evaluatorMap.get(criteria.getValidateType().getEvaluateType());
             if (evaluator != null) {
                 boolean result = evaluator.handle(validateEntry.getResponseWrapper().getBody(), criteria);

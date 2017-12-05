@@ -1,6 +1,6 @@
 package com.jongsuny.monitor.hostChecker.validate.evaluate.support;
 
-import com.jongsuny.monitor.hostChecker.validate.critirea.Criteria;
+import com.jongsuny.monitor.hostChecker.domain.validation.Validation;
 import com.jongsuny.monitor.hostChecker.validate.critirea.EvaluateType;
 import com.jongsuny.monitor.hostChecker.validate.evaluate.Evaluator;
 
@@ -14,7 +14,7 @@ public class StringEvaluator extends AbstractEvaluator implements Evaluator {
     }
 
     @Override
-    public boolean handle(String input, Criteria criteria) {
-        return evaluate(criteria.getOperator(), input, criteria.getValue());
+    public boolean handle(String input, Validation validation) {
+        return evaluate(validation.getOperator(), input, validation.getValue());
     }
 }

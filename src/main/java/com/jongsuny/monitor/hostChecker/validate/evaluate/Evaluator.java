@@ -1,6 +1,6 @@
 package com.jongsuny.monitor.hostChecker.validate.evaluate;
 
-import com.jongsuny.monitor.hostChecker.validate.critirea.Criteria;
+import com.jongsuny.monitor.hostChecker.domain.validation.Validation;
 import com.jongsuny.monitor.hostChecker.validate.critirea.EvaluateType;
 
 /**
@@ -9,5 +9,5 @@ import com.jongsuny.monitor.hostChecker.validate.critirea.EvaluateType;
 public interface Evaluator {
     EvaluateType getValidateType();
 
-    boolean handle(String input, Criteria criteria);
+    boolean handle(String input, Validation validation);
 }

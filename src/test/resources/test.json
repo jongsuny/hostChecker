@@ -1,0 +1,135 @@
+{
+  "serviceName": "test",
+  "description": "testservice",
+  "domain": "baidu.com",
+  "groups": [
+    {
+      "groupId": 0,
+      "groupName": "testGroup",
+      "description": "testservice",
+      "defaultGroup": true,
+      "nodes": [
+        {
+          "ip": "123.125.114.144",
+          "hostname": "",
+          "description": ""
+        },
+        {
+          "ip": "220.181.57.217",
+          "hostname": "",
+          "description": ""
+        },
+        {
+          "ip": "111.13.101.208",
+          "hostname": "",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "groupId": 0,
+      "groupName": "testGroup",
+      "description": "testservice",
+      "defaultGroup": false,
+      "nodes": []
+    }
+  ],
+  "checkPoints": [
+    {
+      "port": 80,
+      "schema": "http",
+      "path": "/",
+      "headers": [
+        {
+          "name": "X-line",
+          "value": "test"
+        },
+        {
+          "name": "X-line-2",
+          "value": "test2"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "rsv_spt",
+          "value": "1"
+        },
+        {
+          "name": "wd",
+          "value": "test"
+        }
+      ],
+      "validations": [
+        {
+          "validateType": "STATUS_CODE",
+          "name": "",
+          "operator": "eq",
+          "value": "200",
+          "description": "return code is not 200"
+        },
+        {
+          "validateType": "header",
+          "name": "Content-Type",
+          "operator": "eq",
+          "value": "text/html",
+          "description": "content-type is not html"
+        },
+        {
+          "validateType": "body",
+          "name": "",
+          "operator": "contains",
+          "value": "html",
+          "description": "not html"
+        }
+      ]
+    },
+    {
+      "port": 443,
+      "schema": "https",
+      "path": "/s",
+      "headers": [
+        {
+          "name": "X-line",
+          "value": "test"
+        },
+        {
+          "name": "X-line-2",
+          "value": "test2"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "rsv_spt",
+          "value": "1"
+        },
+        {
+          "name": "wd",
+          "value": "test"
+        }
+      ],
+      "validations": [
+        {
+          "validateType": "STATUS_CODE",
+          "name": "",
+          "operator": "eq",
+          "value": "200",
+          "description": "return code is not 200"
+        },
+        {
+          "validateType": "header",
+          "name": "Content-Type",
+          "operator": "eq",
+          "value": "text/html",
+          "description": "content-type is not html"
+        },
+        {
+          "validateType": "body",
+          "name": "",
+          "operator": "contains",
+          "value": "html",
+          "description": "not html"
+        }
+      ]
+    }
+  ]
+}

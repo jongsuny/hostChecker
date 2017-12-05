@@ -1,5 +1,7 @@
 package com.jongsuny.monitor.hostChecker.service;
 
+import com.jongsuny.monitor.hostChecker.domain.ServiceConfig;
+
 import java.util.List;
 
 /**
@@ -7,4 +9,5 @@ import java.util.List;
  */
 public interface HostChecker {
     void validate(String url, String host, List<String> ipAddresses);
+    void validate(ServiceConfig service);
 }

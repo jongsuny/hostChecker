@@ -1,5 +1,7 @@
 package com.jongsuny.monitor.hostChecker.validate.critirea;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 /**
@@ -23,16 +25,34 @@ public enum Operator {
     GREATER("gr"),
     GREATER_EQUAL("ge"),
     IN("in"),
-    NOT_IN("ni"),
-    EXISTS("xt"), // only for header validation
-    NOT_EXISTS("nx"), // only for header validation
-    CONTAINS("ct"),
-    NOT_CONTAINS("nc");
-
+    NOT_IN("not_in"),
+    EXISTS("exists"), // only for header validation
+    NOT_EXISTS("not_exists"), // only for header validation
+    CONTAINS("contains"),
+    NOT_CONTAINS("not_contains");
     private String code;
 
     private Operator(String code) {
         this.code = code;
     }
 
+
+    @JsonCreator
+    public static Operator fromCode(String value) {
+        return of(value);
+    }
+
+    @JsonValue
+    public String toCode() {
+        return code;
+    }
+
+    public static Operator of(String code) {
+        for (Operator operator : Operator.values()) {
+            if (operator.getCode().equalsIgnoreCase(code)) {
+                return operator;
+            }
+        }
+        return null;
+    }
 }
