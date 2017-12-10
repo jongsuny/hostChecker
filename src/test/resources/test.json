@@ -2,6 +2,7 @@
   "serviceName": "test",
   "description": "testservice",
   "domain": "baidu.com",
+  "env": "RELEASE",
   "groups": [
     {
       "groupId": 0,
@@ -31,14 +32,31 @@
       "groupName": "testGroup",
       "description": "testservice",
       "defaultGroup": false,
-      "nodes": []
+      "nodes": [
+        {
+          "ip": "123.125.114.144",
+          "hostname": "",
+          "description": ""
+        },
+        {
+          "ip": "220.181.57.217",
+          "hostname": "",
+          "description": ""
+        },
+        {
+          "ip": "111.13.101.208",
+          "hostname": "",
+          "description": ""
+        }
+      ]
     }
   ],
   "checkPoints": [
     {
       "port": 80,
+      "method": "GET",
       "schema": "http",
-      "path": "/",
+      "path": "/s",
       "headers": [
         {
           "name": "X-line",
@@ -85,6 +103,7 @@
     },
     {
       "port": 443,
+      "method": "GET",
       "schema": "https",
       "path": "/s",
       "headers": [
@@ -116,11 +135,25 @@
           "description": "return code is not 200"
         },
         {
+          "validateType": "resp_time",
+          "name": "",
+          "operator": "le",
+          "value": "500",
+          "description": "process time is over 500ms"
+        },
+        {
           "validateType": "header",
           "name": "Content-Type",
           "operator": "eq",
           "value": "text/html",
           "description": "content-type is not html"
+        },
+        {
+          "validateType": "header",
+          "name": "Content-Type",
+          "operator": "in",
+          "value": "",
+          "description": "content-type is not exists"
         },
         {
           "validateType": "body",

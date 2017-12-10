@@ -11,6 +11,7 @@ import java.util.List;
 @Data
 public class Group {
     private Long groupId;
+    private Long serviceId;
     private String groupName;
     private String description;
     private boolean defaultGroup;

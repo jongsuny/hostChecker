@@ -24,7 +24,7 @@ public class ServiceJsonTest extends HostCheckerApplicationTests {
     private String json = null;
 
     @Before
-    public void init()  {
+    public void init() {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()));
             StringBuffer message = new StringBuffer();
@@ -34,7 +34,7 @@ public class ServiceJsonTest extends HostCheckerApplicationTests {
             }
             json = message.toString();
             System.out.println(json);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

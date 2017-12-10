@@ -13,6 +13,7 @@ public class ServiceConfig {
     private Long serviceId;
     private String serviceName;
     private String domain;
+    private ServiceEnv env;
     private String description;
     private List<Group> groups;
     private List<CheckPoint> checkPoints;

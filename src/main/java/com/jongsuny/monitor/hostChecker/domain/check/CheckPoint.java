@@ -12,8 +12,10 @@ import java.util.List;
 public class CheckPoint {
     private int port;
     private String schema;
+    private String method;
     private String path;
     private List<Dictionary> headers;
     private List<Dictionary> arguments;
+    private String body;
     private List<Validation> validations;
 }

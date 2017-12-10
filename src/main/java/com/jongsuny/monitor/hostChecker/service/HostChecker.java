@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface HostChecker {
     void validate(String url, String host, List<String> ipAddresses);
-    void validate(ServiceConfig service);
+    ServiceConfig validate(ServiceConfig service);
 }

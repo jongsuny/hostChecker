@@ -47,7 +47,6 @@ public class HostCheckerImpl implements HostChecker {
         for (String ip : ipAddresses) {
             log.info("checking host:{}, ip:{}", host, ip);
             ResponseWrapper responseWrapper = requestProcessor.process(url);
-
             log.info("response:{}", responseWrapper);
             ValidateEntry entry = new ValidateEntry();
             entry.setHost(host);
@@ -64,72 +63,37 @@ public class HostCheckerImpl implements HostChecker {
         }
     }
 
-    public void validate2(String url, String host, List<String> ipAddresses, List<Validation> validations) {
+    public void validate3(String host, List<String> ipAddresses, CheckPoint checkPoint) {
         HostResolver hostResolver = new BasicHostResolver(host);
         hostResolver.addIpAddresses(ipAddresses);
         resolver.replaceHostResolver(hostResolver);
         for (String ip : ipAddresses) {
             log.info("checking host:{}, ip:{}", host, ip);
-            ResponseWrapper responseWrapper = requestProcessor.process(url);
-
+            ResponseWrapper responseWrapper = requestProcessor.process(host, checkPoint);
             log.info("response:{}", responseWrapper);
             ValidateEntry entry = new ValidateEntry();
             entry.setHost(host);
             entry.setIp(ip);
             entry.setResponseWrapper(responseWrapper);
-            entry.setUrl(url);
-            validator.validate(entry, validations);
+            entry.setUrl(checkPoint.getPath());
+            validator.validate(entry, checkPoint.getValidations());
+            log.info("validated. result:{}", checkPoint);
         }
     }
 
     @Override
-    public void validate(ServiceConfig service) {
+    public ServiceConfig validate(ServiceConfig service) {
         String domain = service.getDomain();
         for (CheckPoint checkPoint : service.getCheckPoints()) {
-            String url = buildUrl(domain, checkPoint);
             for (Group group : service.getGroups()) {
-                List<String> ipAddresses = buildIpAdressList(group.getNodes());
-                validate2(url, domain, ipAddresses, checkPoint.getValidations());
-
+                List<String> ipAddresses = buildIpAddressList(group.getNodes());
+                validate3(domain, ipAddresses, checkPoint);
             }
-
         }
+        return service;
     }
 
-    private String buildUrl(String domain, CheckPoint checkPoint) {
-        StringBuilder url = new StringBuilder();
-        url.append(checkPoint.getSchema())
-                .append("://")
-                .append(domain);
-        if ("http".equalsIgnoreCase(checkPoint.getSchema()) && 80 != checkPoint.getPort()) {
-            url.append(":").append(checkPoint.getPort());
-        } else if ("https".equalsIgnoreCase(checkPoint.getSchema()) && 443 != checkPoint.getPort()) {
-            url.append(":").append(checkPoint.getPort());
-        }
-        if (StringUtils.isEmpty(checkPoint.getPath())) {
-            url.append("/");
-        } else if (!StringUtils.startsWith(checkPoint.getPath(), "/")) {
-            url.append("/").append(checkPoint.getPath());
-        } else {
-            url.append(checkPoint.getPath());
-        }
-        String args = buildArgument(checkPoint.getArguments());
-        if(args != null) {
-            url.append("?").append(args);
-        }
-        return url.toString();
-    }
-
-    private String buildArgument(List<Dictionary> parameters) {
-        if (CollectionUtils.isEmpty(parameters)) {
-            return null;
-        }
-        StringBuilder args = new StringBuilder();
-        parameters.forEach(dic -> args.append(dic.getName()).append("=").append(dic.getValue()).append("&"));
-        return args.toString();
-    }
-
-    private List<String> buildIpAdressList(List<Node> nodes) {
+    private List<String> buildIpAddressList(List<Node> nodes) {
         List<String> ipAddresses = Lists.newArrayList();
         if (CollectionUtils.isNotEmpty(nodes)) {
             nodes.forEach(node -> ipAddresses.add(node.getIp()));

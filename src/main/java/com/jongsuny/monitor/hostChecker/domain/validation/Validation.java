@@ -14,4 +14,5 @@ public class Validation {
     private Operator operator;
     private String value;
     private String description;
+    private ValidationResult validationResult;
 }

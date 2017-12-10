@@ -7,6 +7,7 @@ import lombok.Data;
  */
 @Data
 public class Node {
+    private Long groupId;
     private String ip;
     private String hostname;
     private String description;
