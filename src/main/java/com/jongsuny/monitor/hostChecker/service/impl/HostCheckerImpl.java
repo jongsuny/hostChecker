@@ -19,12 +19,12 @@ import com.jongsuny.monitor.hostChecker.validate.domain.ValidateEntry;
 import com.jongsuny.monitor.hostChecker.validate.domain.ValidateType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by jongsuny on 17/11/29.
@@ -68,16 +68,29 @@ public class HostCheckerImpl implements HostChecker {
         hostResolver.addIpAddresses(ipAddresses);
         resolver.replaceHostResolver(hostResolver);
         for (String ip : ipAddresses) {
-            log.info("checking host:{}, ip:{}", host, ip);
+//            log.info("checking host:{}, ip:{}", host, ip);
             ResponseWrapper responseWrapper = requestProcessor.process(host, checkPoint);
-            log.info("response:{}", responseWrapper);
+//            log.info("response:{}", responseWrapper);
+            if(responseWrapper == null) {
+                log.error("host:{}, IP:{} check failed!", host, ip);
+                continue;
+            }
             ValidateEntry entry = new ValidateEntry();
             entry.setHost(host);
             entry.setIp(ip);
             entry.setResponseWrapper(responseWrapper);
             entry.setUrl(checkPoint.getPath());
             validator.validate(entry, checkPoint.getValidations());
-            log.info("validated. result:{}", checkPoint);
+            AtomicBoolean atomicBoolean = new AtomicBoolean(true);
+            checkPoint.getValidations().forEach(v -> {
+                if(!v.getValidationResult().isResult()) {
+                    log.info("{}",v.getValidationResult());
+                    atomicBoolean.set(false);
+                }
+            });
+            if(!atomicBoolean.get()) {
+                log.error("validated. result:{}", checkPoint);
+            }
         }
     }
 

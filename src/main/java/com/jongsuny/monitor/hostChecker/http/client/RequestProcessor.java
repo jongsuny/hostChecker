@@ -61,7 +61,7 @@ public class RequestProcessor {
             int code = response.getStatusLine().getStatusCode();
             Map<String, String> headers = getHeader(response.getAllHeaders());
             ResponseWrapper responseWrapper = new ResponseWrapper(request.getURI().toString(), headers, code, body, dog.elapsed());
-            log.error("body: {}", body);
+            log.debug("body: {}", body);
             return responseWrapper;
         } catch (Exception e) {
             log.error("process error.", e);
