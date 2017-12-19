@@ -17,6 +17,8 @@ import java.io.InputStreamReader;
  */
 
 public class ServiceJsonTest extends HostCheckerApplicationTests {
+//    @Value(value = "classpath:trade.maju.json")
+//    @Value(value = "classpath:trade.lang.json")
     @Value(value = "classpath:test.json")
     private Resource resource;
     @Autowired

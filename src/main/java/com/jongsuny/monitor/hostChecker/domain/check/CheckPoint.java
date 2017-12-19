@@ -10,6 +10,8 @@ import java.util.List;
  */
 @Data
 public class CheckPoint {
+    private String name;
+    private String description;
     private int port;
     private String schema;
     private String method;

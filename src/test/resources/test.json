@@ -59,12 +59,12 @@
       "path": "/s",
       "headers": [
         {
-          "name": "X-line",
-          "value": "test"
+          "name": "User-Agent",
+          "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36"
         },
         {
-          "name": "X-line-2",
-          "value": "test2"
+          "name": "Accept-Language",
+          "value": "zh-CN,zh;q=0.9,en;q=0.8,ko;q=0.7,ja;q=0.6"
         }
       ],
       "arguments": [
@@ -89,7 +89,7 @@
           "validateType": "header",
           "name": "Content-Type",
           "operator": "eq",
-          "value": "text/html",
+          "value": "text/html;charset=utf-8",
           "description": "content-type is not html"
         },
         {
@@ -108,12 +108,12 @@
       "path": "/s",
       "headers": [
         {
-          "name": "X-line",
-          "value": "test"
+          "name": "User-Agent",
+          "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36"
         },
         {
-          "name": "X-line-2",
-          "value": "test2"
+          "name": "Accept-Language",
+          "value": "zh-CN,zh;q=0.9,en;q=0.8,ko;q=0.7,ja;q=0.6"
         }
       ],
       "arguments": [
@@ -145,7 +145,7 @@
           "validateType": "header",
           "name": "Content-Type",
           "operator": "eq",
-          "value": "text/html",
+          "value": "text/html;charset=utf-8",
           "description": "content-type is not html"
         },
         {

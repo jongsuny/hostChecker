@@ -35,11 +35,11 @@
         </encoder>
     </appender>
     <!--myibatis log configure-->
-    <logger name="com.apache." level="INFO"/>
+    <logger name="org.apache." level="INFO"/>
     <logger name="org.springframework" level="INFO"/>
 
     <!--&lt;!&ndash; 日志输出级别 &ndash;&gt;-->
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
     </root>
