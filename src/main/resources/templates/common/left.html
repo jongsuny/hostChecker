@@ -34,7 +34,7 @@
                         <li th:classappend="${'createService' == subMenu} ? 'active':''"><a href="/pages/config/newService"><i class="fa fa-circle-o"></i> Add service</a></li>
                     </ul>
                 </li>
-                <li th:each="config : *{serviceConfigList}" class="treeview" th:classappend="${config.domain == currentDomain} ? 'active':''">
+                <li th:each="config : *{serviceConfigList}" class="treeview" th:classappend="${config.domain == currentDomain} ? 'active':''" th:title="${config.serviceName}">
                     <a href="#">
                         <i class="fa fa-files-o"></i>
                         <span th:text="${config.domain}"></span>

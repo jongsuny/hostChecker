@@ -63,6 +63,24 @@
                     </div>
                 </form>
             </div>
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Create Service By JSON</h3>
+                </div>
+                <div class="box-body form-horizontal">
+                    <div id="service_config_all" class="box-body">
+                        <div class="form-group">
+                            <label for="jsonContent">
+                                Sample download)
+                            </label>
+                            <textarea id="jsonContent" class="form-control" rows="10" placeholder="Enter JSON..."></textarea>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <a id="createByJson" class="btn btn-success" href="javascript:void(0);">ONE Step Create</a>
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
 </div>
@@ -71,7 +89,7 @@
 <th:block th:include="common/script :: script_more"></th:block>
 <script type="text/javascript" src="/js/serviceAdd.js"></script>
 <script th:inline="javascript">
-    new com.jd.h5.check.Addservice({serviceConfig : null});
+    new com.jd.h5.check.addService({serviceConfig : null});
 </script>
 </body>
 </html>

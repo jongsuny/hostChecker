@@ -50,7 +50,7 @@ public class JobController {
         NodeResult nodeResult = jobService.readNodeResult(domain, jobId, ip);
         return new SuccessResult(nodeResult);
     }
-    @GetMapping("/{domain}/delete")
+    @PostMapping("/{domain}/delete")
     public Result deleteJob(@PathVariable String domain,
                           @RequestParam String jobId) {
         if (jobService.deleteJob(domain, jobId)) {

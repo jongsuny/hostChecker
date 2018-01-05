@@ -69,11 +69,37 @@ public class ConfigServiceImpl implements ConfigService {
         fillServiceConfig(serviceConfig);
         return serviceConfig;
     }
+    public ServiceConfig readSimpleServiceConfig(String serviceName) {
+        return zkClient.readService(serviceName);
+    }
+
+    @Override
+    public boolean createAllInOne(ServiceConfig serviceConfig) {
+        String domain = serviceConfig.getDomain();
+        if (!insertServiceConfig(serviceConfig)) {
+            return false;
+        }
+        if (CollectionUtils.isNotEmpty(serviceConfig.getGroups())) {
+            serviceConfig.getGroups().forEach(group -> {
+                insertGroup(domain, group);
+                if (CollectionUtils.isNotEmpty(group.getNodes())) {
+                    String groupId = UniqueGenerator.makeGroupId(group);
+                    insertNodes(domain, groupId, group.getNodes());
+                }
+            });
+        }
+        if (CollectionUtils.isNotEmpty(serviceConfig.getCheckPoints())) {
+            serviceConfig.getCheckPoints().forEach(checkPoint -> {
+                insertCheckPoint(domain, checkPoint);
+            });
+        }
+        return true;
+    }
 
     @Override
     public boolean insertServiceConfig(ServiceConfig serviceConfig) {
         try {
-            if (zkClient.readService(serviceConfig.getDomain()) != null) {
+            if (readSimpleServiceConfig(serviceConfig.getDomain()) != null) {
                 return false;
             }
             serviceConfig.setServiceId(UniqueGenerator.makeServiceId(serviceConfig.getDomain()));
@@ -87,7 +113,7 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     public boolean updateServiceConfig(ServiceConfig serviceConfig) {
         try {
-            if (readServiceConfig(serviceConfig.getDomain()) == null) {
+            if (readSimpleServiceConfig(serviceConfig.getDomain()) == null) {
                 return false;
             }
             return zkClient.updateService(serviceConfig);
@@ -100,7 +126,7 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     public boolean deleteServiceConfig(String serviceName) {
         try {
-            if (readServiceConfig(serviceName) != null) {
+            if (readSimpleServiceConfig(serviceName) == null) {
                 return false;
             }
             return zkClient.deleteService(serviceName);
@@ -262,7 +288,10 @@ public class ConfigServiceImpl implements ConfigService {
 
 
     public CheckPoint readCheckPoint(String domain, String checkPointName) {
-        return zkClient.readCheckPoint(domain, checkPointName);
+        return readCheckPointById(domain, UniqueGenerator.makeId(checkPointName));
+    }
+    public CheckPoint readCheckPointById(String domain, String checkPointId) {
+        return zkClient.readCheckPoint(domain, checkPointId);
     }
 
     @Override
@@ -295,12 +324,12 @@ public class ConfigServiceImpl implements ConfigService {
     }
 
     @Override
-    public boolean deleteCheckPoint(String domain, String checkPointName) {
+    public boolean deleteCheckPoint(String domain, String checkPointId) {
         try {
-            if (readCheckPoint(domain, checkPointName) == null) {
+            if (readCheckPointById(domain, checkPointId) == null) {
                 return false;
             }
-            return zkClient.deleteCheckPoint(domain, checkPointName);
+            return zkClient.deleteCheckPoint(domain, checkPointId);
         } catch (Exception e) {
             log.error("delete node failed.", e);
         }

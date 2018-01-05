@@ -1,6 +1,5 @@
 package com.jongsuny.monitor.hostChecker.controller.config;
 
-import com.jongsuny.monitor.hostChecker.domain.ServiceConfig;
 import com.jongsuny.monitor.hostChecker.domain.check.CheckPoint;
 import com.jongsuny.monitor.hostChecker.domain.resp.ErrorResult;
 import com.jongsuny.monitor.hostChecker.domain.resp.Result;
@@ -42,9 +41,9 @@ public class CheckPointController {
         return new ErrorResult(false);
     }
 
-    @GetMapping("/{domain}/delete")
-    public Result deleteCheckPoint(@PathVariable String domain, @RequestParam String checkPointName) {
-        if (configService.deleteCheckPoint(domain, checkPointName)) {
+    @PostMapping("/{domain}/delete")
+    public Result deleteCheckPoint(@PathVariable String domain, @RequestParam String checkPointId) {
+        if (configService.deleteCheckPoint(domain, checkPointId)) {
             return new SuccessResult(true);
         }
         return new ErrorResult(false);

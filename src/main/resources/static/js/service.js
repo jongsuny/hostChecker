@@ -17,12 +17,6 @@
 
         _init : function() {
             var _this = this;
-            _this._root.find("#bannerId").val(_this._options.id);
-            _this._root.find("#title").val(_this._options.title);
-            _this._root.find("#weight").val(_this._options.weight);
-            _this._root.find("input[id=showOn]").prop("checked", _this._options.showing);
-            _this._root.find("input[id=showOff]").prop("checked", !_this._options.showing);
-
         },
 
         // event.
@@ -30,14 +24,6 @@
             var _this = this;
             _this._bindSaveBtnEvent();
             _this._bindDeleteEvent();
-            _this._bindTitleLengthEvent();
-        },
-
-        _bindTitleLengthEvent : function() {
-            var _this = this;
-            _this._root.on("input propertychange", "[id=title]", function() {
-                _this._root.find("#inputSize").text($(this).val().length);
-            });
         },
         _getServiceConfig : function() {
             var _this = this;
@@ -98,7 +84,7 @@
                 }
             }).fail(function(jqXHR, textStatus, errorThrown) {
                 $.Alert({
-                    message : "Update Banner FAIL",
+                    message : "Create service FAIL",
                     type : "error"
                 });
             });
@@ -107,53 +93,33 @@
         _bindDeleteEvent : function() {
             var _this = this;
             _this._root.on("click", "[id=delete]", function() {
-                var _data = _this._getBannerInfo();
-                if (_data) {
-                    _this._saveEvent(_this._getBannerInfo());
-                }
-
+                _this._deleteEvent()
             });
         },
 
-        _deleteEvent : function(file, target, width, height) {
+        _deleteEvent : function() {
             var _this = this;
-            var requestData = new FormData();
-            requestData.append("file", file);
-            requestData.append("type", "IMAGE");
-            requestData.append("width", width);
-            requestData.append("height", height);
             $.ajax({
+                url : '/config/service/delete?domain='+_this._options.domain,
                 type : 'post',
-                url: $.lineLiveObsImageURL(),
-                processData : false,
-                contentType : false,
-                data : requestData,
-                beforeSend : function(xhr) {
-                    // _this._root.find("#imageSrc").attr("src",
-                    // "/static/images/loading.gif");
-                },
-                success : function(data) {
-
-                    if (data && data.code == 200) {
-                        _this._root.find("#" + target).attr("src", $.getImageURL(data.result));
-                        //save obs info
-                        _this._root.find("#" + target).prop("hash",data.result.hash);
-                        _this._root.find("#" + target).prop("oid",data.result.oid);
-                        _this._root.find("#" + target).prop("sid",data.result.sid);
-                        _this._root.find("#" + target).prop("svc",data.result.svc);
-
-                    } else {
-                        $.Alert("upload failed!");
-                    }
-                },
-                error : function() {
+                contentType : 'application/json; charset=utf-8',
+                dataType : 'json',
+                cache : false
+            }).done(function(data, textStatus, jqXHR) {
+                if (data && data.code == 200) {
+                    $.Alert( "Service deleted successfully." );
+                    location.href="/"
+                } else {
                     $.Alert({
-                        message : " Image upload FAIL",
+                        message : "Delete service FAIL - " + data.message,
                         type : "error"
                     });
                 }
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                $.Alert({
+                    message : "Delete service FAIL",
+                    type : "error"
+                });
             });
-            return false;
         }
-
     });

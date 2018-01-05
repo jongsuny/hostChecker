@@ -12,25 +12,28 @@
                     <h4 class="modal-title">Add Node</h4>
                 </div>
                 <div class="modal-body">
-                        <div class="box-body">
-                            <div class="form-group">
-                                <label for="addNodeIP">IP Address</label>
-                                <input name="ip" type="text" class="form-control" id="addNodeIP" placeholder="Enter IP" />
-                                <input type="hidden" class="form-control" id="addNodeGroupId"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="addNodeHostname">hostname</label>
-                                <input name="hostname" type="text" class="form-control" id="addNodeHostname" placeholder="Enter hostname" />
-                            </div>
-                            <div class="form-group">
-                                <label for="addNodeDescription">Description</label>
-                                <input name="description" type="text" class="form-control" id="addNodeDescription" placeholder="Enter description" />
-                            </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="addNodeIP">IP Address</label>
+                            <input name="ip" type="text" class="form-control" id="addNodeIP" placeholder="Enter IP"/>
+                            <input type="hidden" class="form-control" id="addNodeGroupId"/>
                         </div>
+                        <div class="form-group">
+                            <label for="addNodeHostname">hostname</label>
+                            <input name="hostname" type="text" class="form-control" id="addNodeHostname"
+                                   placeholder="Enter hostname"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="addNodeDescription">Description</label>
+                            <input name="description" type="text" class="form-control" id="addNodeDescription"
+                                   placeholder="Enter description"/>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary " id="addNodeSaveBtn"><i class="fa fa-save"></i> Save</button>
+                    <button type="button" class="btn btn-primary " id="addNodeSaveBtn"><i class="fa fa-save"></i> Save
+                    </button>
                 </div>
             </div>
         </div>
@@ -59,12 +62,148 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary " id="addMultipleNodeSaveBtn"><i class="fa fa-save"></i> Save</button>
+                    <button type="button" class="btn btn-primary " id="addMultipleNodeSaveBtn"><i
+                            class="fa fa-save"></i> Save
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </th:block>
+<th:block th:fragment="addCheckPointModal">
+    <div id="checkPointModal" class="modal modal-primary data-model">
+        <div class="modal-dialog modal-md">
+            <div class="box box-info">
 
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 name="title" class="modal-title">Add Check Point</h4>
+                </div>
+                <div class="box-body box-info">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#checkPointBasics" data-toggle="tab">Basic</a></li>
+                            <li><a href="#checkPointHeaders" data-toggle="tab">Headers</a></li>
+                            <li><a href="#checkPointArguments" data-toggle="tab">Parameters</a></li>
+                            <li><a href="#checkPointValidations" data-toggle="tab">Validations</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="checkPointBasics">
+                                <div class="box-info form-horizontal">
+                                    <div class="form-group">
+                                        <label for="checkPointName" class="col-sm-2 control-label">Name</label>
+
+                                        <div class="col-sm-10">
+                                            <input id="checkPointId'" type="hidden"/>
+                                            <input id="checkPointName" name="name" type="text" class="form-control"
+                                                   placeholder="name"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="checkPointDescription"
+                                               class="col-sm-2 control-label">Description</label>
+
+                                        <div class="col-sm-10">
+                                            <input id="checkPointDescription" name="description" type="text"
+                                                   class="form-control" placeholder="description"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="checkPointMethod" class="col-sm-2 control-label">Method</label>
+                                        <div class="col-sm-10">
+                                            <select id="checkPointMethod" class="form-control" name="method">
+                                                <option value="GET">GET</option>
+                                                <option value="POST">POST</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="checkPointSchema" class="col-sm-2 control-label">Schema</label>
+                                        <div class="col-sm-10">
+                                            <select id="checkPointSchema" class="form-control" name="schema">
+                                                <option value="http">http</option>
+                                                <option value="https">https</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="checkPointPort" class="col-sm-2 control-label">Port</label>
+                                        <div class="col-sm-10">
+                                            <input id="checkPointPort" name="port" type="number" min="0" max="65535"
+                                                   class="form-control" placeholder="port" value="80"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="checkPointPath"
+                                               class="col-sm-2 control-label">Path</label>
+                                        <div class="col-sm-10">
+                                            <input id="checkPointPath" name="path" type="text"
+                                                   class="form-control" placeholder="path" value="/"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.tab-pane -->
+                            <div class="tab-pane" id="checkPointHeaders">
+                                The European languages are members of the same family. Their separate existence is a myth.
+                                For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
+                                in their grammar, their pronunciation and their most common words. Everyone realizes why a
+                                new common language would be desirable: one could refuse to pay expensive translators. To
+                                achieve this, it would be necessary to have uniform grammar, pronunciation and more common
+                                words. If several languages coalesce, the grammar of the resulting language is more simple
+                                and regular than that of the individual languages.
+                            </div>
+                            <!-- /.tab-pane -->
+                            <div class="tab-pane" id="checkPointArguments">
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                                It has survived not only five centuries, but also the leap into electronic typesetting,
+                                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
+                                sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
+                                like Aldus PageMaker including versions of Lorem Ipsum.
+                            </div>
+                            <div class="tab-pane active" id="checkPointValidations">
+
+                            </div>
+                            <!-- /.tab-pane -->
+                        </div>
+                        <!-- /.tab-content -->
+                    </div>
+
+                    <div class="box-footer">
+                        <button type="button" class="btn btn-info pull-left" data-dismiss="modal">Close</button>
+                        <button name="deleteGroup" type="button" class="btn btn-primary pull-right"><i class="fa fa-save"></i> Save</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</th:block>
+<th:block th:fragment="addCheckPointByJsonModal">
+    <div id="addCheckPointByJsonModal" class="modal modal-primary data-model">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 class="modal-title">Add CheckPoint By JSON</h4>
+                </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="ipList">
+                                Sample download)
+                            </label>
+                            <textarea id="jsonContent" class="form-control" rows="10" placeholder="Enter ..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" name="saveCheckPointJson"><i class="fa fa-save"></i> Save</button>
+                </div>
+        </div>
+    </div>
+</th:block>
 </body>
 </html>

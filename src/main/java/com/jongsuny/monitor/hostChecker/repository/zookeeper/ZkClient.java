@@ -282,9 +282,8 @@ public class ZkClient {
         return path.endsWith(result);
     }
 
-    public CheckPoint readCheckPoint(String domain, String checkPointName) {
+    public CheckPoint readCheckPoint(String domain, String id) {
         try {
-            String id = UniqueGenerator.makeId(checkPointName);
             String path = pathUtil.getCheckPointPath(domain, id);
             return JsonUtil.toObject(CheckPoint.class, readData(path));
         } catch (Exception e) {
@@ -298,9 +297,10 @@ public class ZkClient {
         List<CheckPoint> checkPoints = Lists.newArrayList();
         List<String> list = listChildren(path);
         if (CollectionUtils.isNotEmpty(list)) {
-            list.forEach(checkPointName -> {
-                CheckPoint checkPoint = readCheckPoint(domain, checkPointName);
+            list.forEach(checkPointId -> {
+                CheckPoint checkPoint = readCheckPoint(domain, checkPointId);
                 if (checkPoint != null) {
+                    checkPoint.setId(checkPointId);
                     checkPoints.add(checkPoint);
                 }
             });
@@ -315,9 +315,8 @@ public class ZkClient {
         return result != null;
     }
 
-    public boolean deleteCheckPoint(String domain, String checkPointName) throws Exception {
-        String id = UniqueGenerator.makeId(checkPointName);
-        String path = pathUtil.getCheckPointPath(domain, id);
+    public boolean deleteCheckPoint(String domain, String checkPointId) throws Exception {
+        String path = pathUtil.getCheckPointPath(domain, checkPointId);
         deletePath(path);
         return true;
     }

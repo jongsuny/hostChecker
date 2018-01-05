@@ -8,7 +8,6 @@ Class('com.jd.h5.check.group', {
         _this._options.serviceConfig = options.serviceConfig;
         _this._options.domain = options.serviceConfig.domain;
         _this._root = $(_this._options.rootDiv);
-        _this._root = $(_this._options.rootDiv);
         console.log("## _this._options.rootDiv:", _this._options.rootDiv);
         console.log("## _this._root:", _this._root);
         _this._init();
@@ -17,12 +16,6 @@ Class('com.jd.h5.check.group', {
 
     _init : function() {
         var _this = this;
-        _this._root.find("#bannerId").val(_this._options.id);
-        _this._root.find("#title").val(_this._options.title);
-        _this._root.find("#weight").val(_this._options.weight);
-        _this._root.find("input[id=showOn]").prop("checked", _this._options.showing);
-        _this._root.find("input[id=showOff]").prop("checked", !_this._options.showing);
-
     },
 
     // event.
