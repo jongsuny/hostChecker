@@ -31,8 +31,8 @@ public class ServerConfig {
         Resolver resolver = new BasicResolver();
         return resolver;
     }
-    @Bean
-    public Validator getValidator(){
-        return new BasicValidator();
-    }
+//    @Bean
+//    public Validator getValidator(){
+//        return new BasicValidator();
+//    }
 }

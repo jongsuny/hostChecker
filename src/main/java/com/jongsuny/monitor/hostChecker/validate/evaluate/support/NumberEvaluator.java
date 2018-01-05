@@ -20,7 +20,7 @@ public class NumberEvaluator extends AbstractEvaluator implements Evaluator {
 
     @Override
     public ValidationResult handle(ValidateEntry input, Validation validation) {
-        ValidationResult validationResult = makeValidationResult(input);
+        ValidationResult validationResult = makeValidationResult(validation);
         boolean result;
         String actual = null;
         ResponseWrapper responseWrapper = input.getResponseWrapper();

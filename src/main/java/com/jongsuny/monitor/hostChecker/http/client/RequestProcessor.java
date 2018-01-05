@@ -11,14 +11,14 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.ContentType;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.net.URI;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +32,8 @@ import java.util.stream.Stream;
 public class RequestProcessor {
     @Autowired
     private HostCheckClient hostCheckClient;
+
+    private Charset DEFAULT_CHARSET = Charset.forName("utf-8");
 
     public ResponseWrapper process(String domain, CheckPoint checkPoint) {
         try {
@@ -55,9 +57,10 @@ public class RequestProcessor {
         try {
             WatchDog dog = new WatchDog();
             dog.start();
-            response = hostCheckClient.getHttpClient().execute(request);
+            HttpClient client = hostCheckClient.getHttpClient();
+            response = client.execute(request);
             dog.end();
-            String body = IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset());
+            String body = IOUtils.toString(response.getEntity().getContent(), getCharset(response));
             int code = response.getStatusLine().getStatusCode();
             Map<String, String> headers = getHeader(response.getAllHeaders());
             ResponseWrapper responseWrapper = new ResponseWrapper(request.getURI().toString(), headers, code, body, dog.elapsed());
@@ -81,7 +84,9 @@ public class RequestProcessor {
             dog.start();
             response = hostCheckClient.getHttpClient().execute(request);
             dog.end();
-            String body = IOUtils.toString(response.getEntity().getContent(), Charset.defaultCharset());
+
+
+            String body = IOUtils.toString(response.getEntity().getContent(), getCharset(response));
             int code = response.getStatusLine().getStatusCode();
             Map<String, String> headers = getHeader(response.getAllHeaders());
             ResponseWrapper responseWrapper = new ResponseWrapper(url, headers, code, body, dog.elapsed());
@@ -143,5 +148,16 @@ public class RequestProcessor {
         if (CollectionUtils.isNotEmpty(headers)) {
             headers.forEach(dic -> request.setHeader(dic.getName(), dic.getValue()));
         }
+    }
+
+    private Charset getCharset(HttpResponse response){
+        try {
+            ContentType contentType = ContentType.get(response.getEntity());
+            if (contentType != null && contentType.getCharset() != null) {
+                return contentType.getCharset();
+            }
+        }catch (Exception e) {
+        }
+        return DEFAULT_CHARSET;
     }
 }

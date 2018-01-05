@@ -7,10 +7,8 @@ import lombok.Data;
  */
 @Data
 public class ValidationResult {
-    private String ip;
-    private String host;
-    private String path;
     private boolean result;
     private String message;
     private String actual;
+    private Validation validation;
 }

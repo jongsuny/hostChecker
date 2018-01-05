@@ -1,5 +1,6 @@
 package com.jongsuny.monitor.hostChecker.validate.evaluate.support;
 
+import com.jongsuny.monitor.hostChecker.domain.validation.Validation;
 import com.jongsuny.monitor.hostChecker.domain.validation.ValidationResult;
 import com.jongsuny.monitor.hostChecker.validate.critirea.Operator;
 import com.jongsuny.monitor.hostChecker.validate.domain.ValidateEntry;
@@ -12,11 +13,9 @@ import org.apache.commons.lang3.math.NumberUtils;
 public class AbstractEvaluator {
     private String DILEMITER = "||";
 
-    protected ValidationResult makeValidationResult(ValidateEntry validateEntry) {
+    protected ValidationResult makeValidationResult(Validation validation) {
         ValidationResult validationResult = new ValidationResult();
-        validationResult.setHost(validateEntry.getHost());
-        validationResult.setIp(validateEntry.getIp());
-        validationResult.setPath(validateEntry.getUrl());
+        validationResult.setValidation(validation);
         validationResult.setResult(true);
         return validationResult;
     }

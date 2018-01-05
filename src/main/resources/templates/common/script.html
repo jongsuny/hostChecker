@@ -4,19 +4,20 @@
 </head>
 <body>
 <th:block th:fragment="script_common">
-    <script type="text/javascript" src="/webjars/jquery/2.2.4/jquery.min.js"></script>
-    <script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- jQuery -->
+    <script th:src="@{/webjars/AdminLTE/2.3.8/plugins/jQuery/jquery-2.2.3.min.js}"></script>
+    <script th:src="@{/webjars/AdminLTE/2.3.8/plugins/jQueryUI/jquery-ui.min.js}"></script>
+    <!-- Bootstrap -->
+    <script th:src="@{/webjars/AdminLTE/2.3.8/bootstrap/js/bootstrap.min.js}"></script>
+    <!-- AdminLTE App -->
+    <script th:src="@{/webjars/AdminLTE/2.3.8/dist/js/app.min.js}"></script>
+    <script type="text/javascript" src="/js/common/class.js"></script>
+    <script type="text/javascript" src="/js/common/commons.js"></script>
 </th:block>
 
 <th:block th:fragment="script_more">
 
-    <!-- jQuery 3 -->
-    <script src="/webjars/AdminLTE/2.3.8/plugins/jQuery/jquery-2.2.3.min.js"></script>
-    <!-- Bootstrap 3.3.7 -->
-    <script src="/webjars/AdminLTE/2.3.8//bootstrap/js/bootstrap.min.js"></script>    <!-- FastClick -->
     <script src="/webjars/AdminLTE/2.3.8/plugins/fastclick/fastclick.js"></script>
-    <!-- AdminLTE App -->
-    <script src="/webjars/AdminLTE/2.3.8/dist/js/app.min.js"></script>
     <!-- Sparkline -->
     <script src="/webjars/AdminLTE/2.3.8/plugins/sparkline/jquery.sparkline.min.js"></script>
     <!-- jvectormap  -->
@@ -27,9 +28,9 @@
     <!-- ChartJS -->
     <script src="/webjars/AdminLTE/2.3.8/plugins/chartjs/Chart.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="/webjars/AdminLTE/2.3.8/dist/js/pages/dashboard2.js"></script>
+    <!--<script src="/webjars/AdminLTE/2.3.8/dist/js/pages/dashboard2.js"></script>-->
     <!-- AdminLTE for demo purposes -->
-    <script src="/webjars/AdminLTE/2.3.8/dist/js/demo.js"></script>
+    <!--<script src="/webjars/AdminLTE/2.3.8/dist/js/demo.js"></script>-->
 </th:block>
 
 </body>

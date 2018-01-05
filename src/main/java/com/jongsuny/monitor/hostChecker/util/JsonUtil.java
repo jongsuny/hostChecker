@@ -18,6 +18,9 @@ public class JsonUtil {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public static <T> T toObject(Class<T> c, byte[] jsonBytes) {
+        if (jsonBytes == null) {
+            return null;
+        }
         T result = null;
         try {
             result = objectMapper.readValue(jsonBytes, c);

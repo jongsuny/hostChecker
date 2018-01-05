@@ -55,6 +55,9 @@ public class InetUtils {
     }
 
     public static boolean isIPv4Address(final String input) {
+        if (input == null) {
+            return false;
+        }
         return IPV4_PATTERN.matcher(input).matches();
     }
 

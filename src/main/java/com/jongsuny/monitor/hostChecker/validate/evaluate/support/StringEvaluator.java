@@ -18,7 +18,7 @@ public class StringEvaluator extends AbstractEvaluator implements Evaluator {
 
     @Override
     public ValidationResult handle(ValidateEntry input, Validation validation) {
-        ValidationResult validationResult = makeValidationResult(input);
+        ValidationResult validationResult = makeValidationResult(validation);
         boolean result =
                 evaluate(validation.getOperator(), input.getResponseWrapper().getBody(), validation.getValue());
         if (!result) {

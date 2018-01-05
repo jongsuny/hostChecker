@@ -1,6 +1,5 @@
 package com.jongsuny.monitor.hostChecker.domain;
 
-import com.jongsuny.monitor.hostChecker.domain.check.CheckPoint;
 import lombok.Data;
 
 import java.util.List;
@@ -10,11 +9,10 @@ import java.util.List;
  */
 @Data
 public class Group {
-    private Long groupId;
-    private Long serviceId;
+    private String groupId;
+    private String domain;
     private String groupName;
     private String description;
-    private boolean defaultGroup;
+    private boolean defaultGroup = false;
     private List<Node> nodes;
-    private List<CheckPoint> checkPoints;
 }

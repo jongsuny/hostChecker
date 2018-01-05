@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<th:block th:fragment="addNodeModal">
+    <div id="addNodeModal" class="modal modal-primary data-model">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 class="modal-title">Add Node</h4>
+                </div>
+                <div class="modal-body">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="addNodeIP">IP Address</label>
+                                <input name="ip" type="text" class="form-control" id="addNodeIP" placeholder="Enter IP" />
+                                <input type="hidden" class="form-control" id="addNodeGroupId"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="addNodeHostname">hostname</label>
+                                <input name="hostname" type="text" class="form-control" id="addNodeHostname" placeholder="Enter hostname" />
+                            </div>
+                            <div class="form-group">
+                                <label for="addNodeDescription">Description</label>
+                                <input name="description" type="text" class="form-control" id="addNodeDescription" placeholder="Enter description" />
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary " id="addNodeSaveBtn"><i class="fa fa-save"></i> Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+<th:block th:fragment="addMultipleNodeModal">
+    <div id="addMultipleNodeModal" class="modal modal-primary data-model">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 class="modal-title">Add Multiple Node</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="ipList">
+                                Ex1) ip,hostname,description<br/>127.0.0.1,localhost,localhost description<br/>
+                                Ex2)ip1\n ip2<br/>127.0.0.1<br/>10.0.0.1<br/>
+                                Ex3)json<br/>[{"ip":"127.0.0.1","hostname":"hostname","description":"some description"}]
+                            </label>
+                            <input type="hidden" class="form-control" id="addMultipleNodeGroupId"/>
+                            <textarea id="ipList" class="form-control" rows="10" placeholder="Enter ..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary " id="addMultipleNodeSaveBtn"><i class="fa fa-save"></i> Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+</body>
+</html>

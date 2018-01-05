@@ -10,7 +10,7 @@ import java.util.List;
  */
 @Data
 public class ServiceConfig {
-    private Long serviceId;
+    private String serviceId;
     private String serviceName;
     private String domain;
     private ServiceEnv env;

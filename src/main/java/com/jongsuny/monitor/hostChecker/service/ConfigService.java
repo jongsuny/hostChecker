@@ -3,6 +3,7 @@ package com.jongsuny.monitor.hostChecker.service;
 import com.jongsuny.monitor.hostChecker.domain.Group;
 import com.jongsuny.monitor.hostChecker.domain.Node;
 import com.jongsuny.monitor.hostChecker.domain.ServiceConfig;
+import com.jongsuny.monitor.hostChecker.domain.check.CheckPoint;
 
 import java.util.List;
 
@@ -44,5 +45,18 @@ public interface ConfigService {
 
     boolean updateNode(String domain, String groupName, Node node);
 
-    boolean deleteNode(String serviceName, String groupName, String ip);
+    boolean deleteNode(String domain, String groupName, String ip);
+
+    boolean deleteNodes(String domain, String groupName, List<String> ipList);
+
+    /**
+     * operations for check point
+     */
+    List<CheckPoint> listCheckPoints(String domain);
+
+    boolean insertCheckPoint(String domain, CheckPoint checkPoint);
+
+    boolean updateCheckPoint(String domain, CheckPoint checkPoint);
+
+    boolean deleteCheckPoint(String domain, String checkPointName);
 }

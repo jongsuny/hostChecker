@@ -1,63 +1,64 @@
 package com.jongsuny.monitor.hostChecker.controller.config;
 
-import com.jongsuny.monitor.hostChecker.domain.Group;
-import com.jongsuny.monitor.hostChecker.domain.Node;
 import com.jongsuny.monitor.hostChecker.domain.ServiceConfig;
-import com.jongsuny.monitor.hostChecker.domain.check.CheckPoint;
-import com.jongsuny.monitor.hostChecker.repository.ServiceConfigRepository;
-import com.jongsuny.monitor.hostChecker.repository.zookeeper.ZkClient;
+import com.jongsuny.monitor.hostChecker.domain.resp.ErrorResult;
+import com.jongsuny.monitor.hostChecker.domain.resp.Result;
+import com.jongsuny.monitor.hostChecker.domain.resp.SuccessResult;
 import com.jongsuny.monitor.hostChecker.service.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by jongsuny on 17/12/10.
  */
 @RestController
-@RequestMapping("/config")
+@RequestMapping("/config/service")
 public class ServiceConfigController {
-    @Autowired
-    private ServiceConfigRepository serviceConfigRepository;
-    @Autowired
-    private ZkClient zkClient;
     @Autowired
     private ConfigService configService;
 
-    @GetMapping("/services/list")
-    public Object list() {
-        return serviceConfigRepository.list();
+    @GetMapping("/list")
+    public Result list() {
+        List<ServiceConfig> result = configService.listServiceConfig();
+        return new SuccessResult(result);
     }
 
-    @PostMapping("/services/create")
-    public Object create(@RequestBody ServiceConfig serviceConfig) throws Exception {
-        zkClient.saveService(serviceConfig);
-        return serviceConfigRepository.insert(serviceConfig);
+    @GetMapping("/list/all")
+    public Result listAll() {
+        List<ServiceConfig> result = configService.listFullServiceConfig();
+        return new SuccessResult(result);
     }
 
-    @PostMapping("/services/update")
-    public Object update(@RequestBody ServiceConfig serviceConfig) {
-        return serviceConfigRepository.update(serviceConfig);
+    @PostMapping("/create")
+    public Result createServiceConfig(@RequestBody ServiceConfig serviceConfig) {
+        if (configService.insertServiceConfig(serviceConfig)) {
+            return new SuccessResult(true);
+        }
+        return new ErrorResult(false);
     }
 
-    @GetMapping("/services/delete/{serviceId}")
-    public Object delete(@PathVariable Long serviceId) {
-        return serviceConfigRepository.delete(serviceId);
+    @PostMapping("/update")
+    public Result updateServiceConfig(@RequestBody ServiceConfig serviceConfig) {
+        if (configService.updateServiceConfig(serviceConfig)) {
+            return new SuccessResult(true);
+        }
+        return new ErrorResult(false);
     }
 
-    @PostMapping("/{serviceName}/groups/create")
-    public Object create(@PathVariable String serviceName, @RequestBody Group group) throws Exception {
-        return configService.insertGroup(serviceName, group);
+    @PostMapping("/read")
+    public Result readServiceConfig(@RequestParam String domain) {
+        ServiceConfig result = configService.readServiceConfig(domain);
+        return new SuccessResult(result);
     }
 
-    @PostMapping("/{serviceName}/checks/create")
-    public Object create(@PathVariable String serviceName, @RequestBody CheckPoint checkPoint) throws Exception {
-        return zkClient.createCheckPoint(serviceName, checkPoint);
+    @GetMapping("/delete")
+    public Result deleteServiceConfig(@RequestParam String domain) {
+        if (configService.deleteServiceConfig(domain)) {
+            return new SuccessResult(true);
+        }
+        return new ErrorResult(false);
     }
 
-    @PostMapping("/{serviceName}/{groupName}/nodes/create")
-    public Object create(@PathVariable String serviceName,
-                         @PathVariable String groupName,
-                         @RequestBody Node node) throws Exception {
-        return configService.insertNode(serviceName, groupName, node);
-    }
 }
