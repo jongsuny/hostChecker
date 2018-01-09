@@ -24,6 +24,7 @@ public class JobWrapper {
     private String jobName;
     private Date registerDate;
     private String domain;
+    private String groups;
     private List<String> ipList;
     private CheckPoint checkPoint;
     private Map<String, NodeResult> results;

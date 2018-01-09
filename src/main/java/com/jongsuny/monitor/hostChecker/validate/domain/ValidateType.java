@@ -36,9 +36,10 @@ public enum ValidateType {
     }
 
     public static ValidateType of(String code) {
-        for (ValidateType operator : ValidateType.values()) {
-            if (operator.getCode().equalsIgnoreCase(code)) {
-                return operator;
+        for (ValidateType validationType : ValidateType.values()) {
+            if (validationType.getCode().equalsIgnoreCase(code)
+                    || validationType.name().equalsIgnoreCase(code)) {
+                return validationType;
             }
         }
         return null;

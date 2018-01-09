@@ -3,18 +3,14 @@ package com.jongsuny.monitor.hostChecker.service.impl;
 import com.google.common.collect.Lists;
 import com.jongsuny.monitor.hostChecker.domain.Group;
 import com.jongsuny.monitor.hostChecker.domain.NodeResult;
-import com.jongsuny.monitor.hostChecker.domain.NodeStatus;
 import com.jongsuny.monitor.hostChecker.domain.ServiceConfig;
 import com.jongsuny.monitor.hostChecker.domain.check.CheckPoint;
 import com.jongsuny.monitor.hostChecker.domain.job.Job;
-import com.jongsuny.monitor.hostChecker.domain.job.JobStatus;
 import com.jongsuny.monitor.hostChecker.domain.job.JobWrapper;
 import com.jongsuny.monitor.hostChecker.repository.zookeeper.ZkClient;
-import com.jongsuny.monitor.hostChecker.service.ConfigService;
 import com.jongsuny.monitor.hostChecker.service.HostChecker;
 import com.jongsuny.monitor.hostChecker.service.JobService;
 import com.jongsuny.monitor.hostChecker.util.UniqueGenerator;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +29,6 @@ public class JobServiceImpl implements JobService {
     @Autowired
     private ZkClient zkClient;
     @Autowired
-    private ConfigService configService;
-    @Autowired
     private JobValidator jobValidator;
     @Autowired
     private HostChecker hostChecker;
@@ -52,6 +46,11 @@ public class JobServiceImpl implements JobService {
     @Override
     public JobWrapper readJob(String domain, String jobId) {
         return zkClient.readJob(domain, jobId);
+    }
+
+    @Override
+    public List<JobWrapper> listJob(String domain) {
+        return zkClient.listJob(domain);
     }
 
     @Override
@@ -94,39 +93,52 @@ public class JobServiceImpl implements JobService {
         wrapper.setJobId(jobId);
         wrapper.setRegisterDate(new Date());
         ServiceConfig config = job.getServiceConfig();
-        if (job.getCheckPoint() != null) {
-            wrapper.setCheckPoint(job.getCheckPoint());
-        } else {
-            wrapper.setCheckPoint(getCheckPoint(config.getCheckPoints(), job.getCheckPointName()));
-        }
+        wrapper.setCheckPoint(getCheckPoint(config.getCheckPoints(), job.getCheckPointId()));
         if (CollectionUtils.isNotEmpty(job.getIpList())) {
             wrapper.setIpList(job.getIpList());
         } else {
-            wrapper.setIpList(getGroupIPList(config.getGroups(), job.getGroupNames()));
+            wrapper.setIpList(getGroupIPList(config.getGroups(), job.getGroups()));
+            wrapper.setGroups(getGroupNames(config.getGroups(), job.getGroups()));
         }
         return wrapper;
     }
 
-    private CheckPoint getCheckPoint(List<CheckPoint> checkPoints, String checkPointName) {
+    private CheckPoint getCheckPoint(List<CheckPoint> checkPoints, String checkPointId) {
         if (CollectionUtils.isEmpty(checkPoints)) {
             return null;
         }
         for (CheckPoint checkPoint : checkPoints) {
-            if (StringUtils.equalsIgnoreCase(checkPointName, checkPoint.getName())) {
+            if (StringUtils.equalsIgnoreCase(checkPointId, checkPoint.getId())) {
                 return checkPoint;
             }
         }
         return null;
     }
 
-    private List<String> getGroupIPList(List<Group> groups, List<String> groupNameList) {
+    private String getGroupNames(List<Group> groups, List<String> groupIds) {
+        if (CollectionUtils.isEmpty(groups)) {
+            return StringUtils.EMPTY;
+        }
+        List<String> result = Lists.newArrayList();
+        groupIds.forEach(groupId -> {
+            Optional<Group> groupFound = groups.stream()
+                    .filter(group -> StringUtils.equalsIgnoreCase(groupId, group.getGroupId()))
+                    .findFirst();
+            if (groupFound.isPresent()) {
+                result.add(groupFound.get().getGroupName());
+            }
+        });
+        return StringUtils.join(result,",");
+    }
+
+    private List<String> getGroupIPList(List<Group> groups, List<String> groupIds) {
         if (CollectionUtils.isEmpty(groups)) {
             return Lists.newArrayList();
         }
         List<String> result = Lists.newArrayList();
-        groupNameList.forEach(groupName -> {
+        groupIds.forEach(groupId -> {
             Optional<Group> groupFound = groups.stream()
-                    .filter(group -> StringUtils.equalsIgnoreCase(groupName, group.getGroupName()))
+                    .filter(group -> StringUtils.equalsIgnoreCase(groupId, group.getGroupId()))
                     .findFirst();
             if (groupFound.isPresent()) {
                 result.addAll(getIpList(groupFound.get()));

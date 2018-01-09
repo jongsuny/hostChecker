@@ -1,5 +1,6 @@
 package com.jongsuny.monitor.hostChecker.domain.job;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jongsuny.monitor.hostChecker.domain.ServiceConfig;
 import com.jongsuny.monitor.hostChecker.domain.check.CheckPoint;
 import lombok.Data;
@@ -13,9 +14,9 @@ import java.util.List;
 public class Job {
     private String jobName;
     private String domain;
-    private List<String> groupNames;
+    private List<String> groups;
     private List<String> ipList;
-    private String checkPointName;
-    private CheckPoint checkPoint;
+    private String checkPointId;
+    @JsonIgnore
     private ServiceConfig serviceConfig;
 }

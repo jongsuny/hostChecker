@@ -8,18 +8,15 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
     <th:block th:include="common/header :: headerCommonCss"></th:block>
     <style>
-        .data-modal {
-            position: relative;
-            top: auto;
-            bottom: auto;
-            right: auto;
-            left: auto;
-            display: block;
-            z-index: 1;
-        }
 
-        .data-modal .modal {
-            background: transparent !important;
+        /* Important part */
+        .check-point .box-info{
+            max-height: 350px;
+            overflow-y: auto;
+        }
+        .modal-dialog {
+            width: 800px;
+            margin: 30px auto;
         }
     </style>
     <th:block th:include="common/script :: script_common"></th:block>
@@ -40,6 +37,9 @@
                 <div class="col-md-12">
                     <th:block th:include="common/modal :: addCheckPointModal"></th:block>
                     <th:block th:include="common/modal :: addCheckPointByJsonModal"></th:block>
+                    <th:block th:include="common/modal :: addHeaderByTextModal"></th:block>
+                    <th:block th:include="common/modal :: addParameterByTextModal"></th:block>
+                    <th:block th:include="common/modal :: addCheckPointValidationByJsonModal"></th:block>
                     <div class="row">
                         <div class="box box-primary">
                             <div class="box-header with-border">
@@ -88,7 +88,6 @@
                                 </table>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -101,7 +100,7 @@
 <th:block th:include="common/script :: script_more"></th:block>
 <script type="text/javascript" src="/js/checkPoint.js"></script>
 <script th:inline="javascript">
-    new com.jd.h5.check.checkPoint({serviceConfig: [[${serviceConfig}]]});
+    new com.jd.h5.check.checkPoint({serviceConfig: [[${serviceConfig}]], dictionary: [[${dictionary}]]});
 </script>
 </body>
 </html>

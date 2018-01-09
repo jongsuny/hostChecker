@@ -49,7 +49,8 @@ public enum Operator {
 
     public static Operator of(String code) {
         for (Operator operator : Operator.values()) {
-            if (operator.getCode().equalsIgnoreCase(code)) {
+            if (operator.getCode().equalsIgnoreCase(code)
+                    || operator.name().equalsIgnoreCase(code)) {
                 return operator;
             }
         }

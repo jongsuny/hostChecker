@@ -32,23 +32,20 @@ public class JobValidator {
         if (StringUtils.isBlank(job.getDomain())) {
             throw new InvalidParamException("job domain is empty!");
         }
-        if (StringUtils.isBlank(job.getCheckPointName())) {
+        if (StringUtils.isBlank(job.getCheckPointId())) {
             throw new InvalidParamException("job check point name is empty!");
         }
-        if (StringUtils.isBlank(job.getCheckPointName()) && job.getCheckPoint() == null) {
-            throw new InvalidParamException("job check point name or checkPoint object must be specified!");
-        }
-        if (CollectionUtils.isEmpty(job.getIpList()) && CollectionUtils.isEmpty(job.getGroupNames())) {
+        if (CollectionUtils.isEmpty(job.getIpList()) && CollectionUtils.isEmpty(job.getGroups())) {
             throw new InvalidParamException("job group name or ip list must be specified!");
         }
         ServiceConfig serviceConfig = configService.readServiceConfig(job.getDomain());
         if (serviceConfig == null) {
             throw new InvalidParamException("job domain is not exists!");
         }
-        if (!checkPointExists(serviceConfig.getCheckPoints(), job.getCheckPointName())) {
+        if (!checkPointExists(serviceConfig.getCheckPoints(), job.getCheckPointId())) {
             throw new InvalidParamException("job check point name is not exists!");
         }
-        if (!groupNameExists(serviceConfig.getGroups(), job.getGroupNames())) {
+        if (!groupNameExists(serviceConfig.getGroups(), job.getGroups())) {
             throw new InvalidParamException("job group name is not exists!");
         }
         if (!isValidIp(job.getIpList())) {
@@ -58,33 +55,33 @@ public class JobValidator {
         return true;
     }
 
-    private boolean checkPointExists(List<CheckPoint> checkPoints, String checkPointName) {
+    private boolean checkPointExists(List<CheckPoint> checkPoints, String checkPiontId) {
         if (CollectionUtils.isEmpty(checkPoints)) {
             return false;
         }
         for (CheckPoint checkPoint : checkPoints) {
-            if (StringUtils.equalsIgnoreCase(checkPointName, checkPoint.getName())) {
+            if (StringUtils.equalsIgnoreCase(checkPiontId, checkPoint.getId())) {
                 return true;
             }
         }
         return false;
     }
 
-    private boolean groupNameExists(List<Group> groups, List<String> groupNameList) {
+    private boolean groupNameExists(List<Group> groups, List<String> groupIds) {
         if (CollectionUtils.isEmpty(groups)) {
             return false;
         }
-        for (String groupName : groupNameList) {
-            if (!isExistingGroup(groups, groupName)) {
-                throw new InvalidParamException("job group name [" + groupName + "] is not exists!");
+        for (String groupId : groupIds) {
+            if (!isExistingGroup(groups, groupId)) {
+                throw new InvalidParamException("job group name [" + groupId + "] is not exists!");
             }
         }
         return true;
     }
 
-    private boolean isExistingGroup(List<Group> groups, String groupName) {
+    private boolean isExistingGroup(List<Group> groups, String groupId) {
         for (Group group : groups) {
-            if (StringUtils.equalsIgnoreCase(groupName, group.getGroupName())) {
+            if (StringUtils.equalsIgnoreCase(groupId, group.getGroupId())) {
                 return true;
             }
         }

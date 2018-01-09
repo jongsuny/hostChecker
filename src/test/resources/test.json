@@ -55,6 +55,8 @@
     {
       "port": 80,
       "method": "GET",
+      "name" : "搜索test测试",
+      "description" : "搜索test测试",
       "schema": "http",
       "path": "/s",
       "headers": [
@@ -105,6 +107,8 @@
       "port": 443,
       "method": "GET",
       "schema": "https",
+      "name" : "搜索test测试 https",
+      "description" : "搜索test测试https",
       "path": "/s",
       "headers": [
         {

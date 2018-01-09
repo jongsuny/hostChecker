@@ -5,8 +5,10 @@ import com.jongsuny.monitor.hostChecker.domain.Group;
 import com.jongsuny.monitor.hostChecker.domain.Node;
 import com.jongsuny.monitor.hostChecker.domain.ServiceConfig;
 import com.jongsuny.monitor.hostChecker.domain.check.CheckPoint;
+import com.jongsuny.monitor.hostChecker.domain.job.JobWrapper;
 import com.jongsuny.monitor.hostChecker.repository.zookeeper.ZkClient;
 import com.jongsuny.monitor.hostChecker.service.ConfigService;
+import com.jongsuny.monitor.hostChecker.service.JobService;
 import com.jongsuny.monitor.hostChecker.util.UniqueGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -23,7 +25,8 @@ import java.util.List;
 public class ConfigServiceImpl implements ConfigService {
     @Autowired
     private ZkClient zkClient;
-
+    @Autowired
+    private JobService jobService;
     @Override
     public List<ServiceConfig> listServiceConfig() {
         try {
@@ -69,6 +72,17 @@ public class ConfigServiceImpl implements ConfigService {
         fillServiceConfig(serviceConfig);
         return serviceConfig;
     }
+
+    @Override
+    public ServiceConfig readServiceConfigWithJobs(String serviceName) {
+        ServiceConfig serviceConfig = readServiceConfig(serviceName);
+        if(serviceConfig != null) {
+            List<JobWrapper> jobs = jobService.listJob(serviceName);
+            serviceConfig.setJobs(jobs);
+        }
+        return serviceConfig;
+    }
+
     public ServiceConfig readSimpleServiceConfig(String serviceName) {
         return zkClient.readService(serviceName);
     }

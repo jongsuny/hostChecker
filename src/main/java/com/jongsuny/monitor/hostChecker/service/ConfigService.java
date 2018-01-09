@@ -17,6 +17,8 @@ public interface ConfigService {
 
     ServiceConfig readServiceConfig(String serviceName);
 
+    ServiceConfig readServiceConfigWithJobs(String serviceName);
+
     boolean createAllInOne(ServiceConfig serviceConfig);
 
     boolean insertServiceConfig(ServiceConfig serviceConfig);

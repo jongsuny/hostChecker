@@ -79,12 +79,12 @@
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h4 name="title" class="modal-title">Add Check Point</h4>
                 </div>
-                <div class="box-body box-info">
+                <div class="box-body box-info check-point-box-body">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#checkPointBasics" data-toggle="tab">Basic</a></li>
                             <li><a href="#checkPointHeaders" data-toggle="tab">Headers</a></li>
-                            <li><a href="#checkPointArguments" data-toggle="tab">Parameters</a></li>
+                            <li><a href="#checkPointParameters" data-toggle="tab">Parameters</a></li>
                             <li><a href="#checkPointValidations" data-toggle="tab">Validations</a></li>
                         </ul>
                         <div class="tab-content">
@@ -94,7 +94,7 @@
                                         <label for="checkPointName" class="col-sm-2 control-label">Name</label>
 
                                         <div class="col-sm-10">
-                                            <input id="checkPointId'" type="hidden"/>
+                                            <input id="checkPointId" type="hidden" name="checkPointId"/>
                                             <input id="checkPointName" name="name" type="text" class="form-control"
                                                    placeholder="name"/>
                                         </div>
@@ -110,6 +110,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="checkPointMethod" class="col-sm-2 control-label">Method</label>
+
                                         <div class="col-sm-10">
                                             <select id="checkPointMethod" class="form-control" name="method">
                                                 <option value="GET">GET</option>
@@ -119,6 +120,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="checkPointSchema" class="col-sm-2 control-label">Schema</label>
+
                                         <div class="col-sm-10">
                                             <select id="checkPointSchema" class="form-control" name="schema">
                                                 <option value="http">http</option>
@@ -128,6 +130,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="checkPointPort" class="col-sm-2 control-label">Port</label>
+
                                         <div class="col-sm-10">
                                             <input id="checkPointPort" name="port" type="number" min="0" max="65535"
                                                    class="form-control" placeholder="port" value="80"/>
@@ -136,6 +139,7 @@
                                     <div class="form-group">
                                         <label for="checkPointPath"
                                                class="col-sm-2 control-label">Path</label>
+
                                         <div class="col-sm-10">
                                             <input id="checkPointPath" name="path" type="text"
                                                    class="form-control" placeholder="path" value="/"/>
@@ -144,36 +148,147 @@
                                 </div>
                             </div>
                             <!-- /.tab-pane -->
-                            <div class="tab-pane" id="checkPointHeaders">
-                                The European languages are members of the same family. Their separate existence is a myth.
-                                For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
-                                in their grammar, their pronunciation and their most common words. Everyone realizes why a
-                                new common language would be desirable: one could refuse to pay expensive translators. To
-                                achieve this, it would be necessary to have uniform grammar, pronunciation and more common
-                                words. If several languages coalesce, the grammar of the resulting language is more simple
-                                and regular than that of the individual languages.
+                            <div class="tab-pane check-point" id="checkPointHeaders">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Quick Utilities</h3>
+                                    <div class="box-tools">
+                                        <div class="input-group input-group-sm" style="width: 100px;">
+                                            <div class="input-group-btn">
+                                                <a name="addHeaderEntryBtn" class="btn btn-success btn-pull-right"
+                                                   href="javascript:void(0);">Add Header</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-tools">
+                                        <div class="input-group input-group-sm" style="width: 222px;">
+                                            <div class="input-group-btn">
+                                                <a name="addHeaderByTextBtn" class="btn btn-success" href="javascript:void(0);">Add By Text</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-info form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-sm-3">
+                                            <input name="name" type="text" class="form-control" placeholder="User-Agent" value="Cookie"/>
+                                        </label>
+                                        <div class="col-sm-7">
+                                            <input name="value" type="text" class="form-control" placeholder="name" value=""/>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <a name="delEntryBtn" class="btn btn-danger" href="javascript:void(0);">Del</a>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3">
+                                            <input name="name" type="text" class="form-control" placeholder="User-Agent" value="User-Agent"/>
+                                        </label>
+                                        <div class="col-sm-7">
+                                            <input name="value" type="text" class="form-control" placeholder="User-Agent"/>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <a name="delEntryBtn" class="btn btn-danger" href="javascript:void(0);">Del</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <!-- /.tab-pane -->
-                            <div class="tab-pane" id="checkPointArguments">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                It has survived not only five centuries, but also the leap into electronic typesetting,
-                                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-                                sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-                                like Aldus PageMaker including versions of Lorem Ipsum.
+                            <div class="tab-pane check-point" id="checkPointParameters">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Quick Utilities</h3>
+                                    <div class="box-tools">
+                                        <div class="input-group input-group-sm" style="width: 100px;">
+                                            <div class="input-group-btn">
+                                                <a name="addParameterEntryBtn" class="btn btn-success btn-pull-right"
+                                                   href="javascript:void(0);">Add Parameter</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-tools">
+                                        <div class="input-group input-group-sm" style="width: 222px;">
+                                            <div class="input-group-btn">
+                                                <a name="addParameterByURLBtn" class="btn btn-success" href="javascript:void(0);">Add By URL</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-info form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-sm-3">
+                                            <input name="name" type="text" class="form-control" placeholder="parameter name" value="query"/>
+                                        </label>
+                                        <div class="col-sm-7">
+                                            <input name="value" type="text" class="form-control" placeholder="parameter value" value="test"/>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <a name="delEntryBtn" class="btn btn-danger" href="javascript:void(0);">Del</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="tab-pane active" id="checkPointValidations">
-
+                            <div class="tab-pane check-point" id="checkPointValidations">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Quick Utilities</h3>
+                                    <div class="box-tools">
+                                        <div class="input-group input-group-sm" style="width: 100px;">
+                                            <div class="input-group-btn">
+                                                <a name="addValidationBtn" class="btn btn-success btn-pull-right" href="javascript:void(0);">Add Validation</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-tools">
+                                        <div class="input-group input-group-sm" style="width: 222px;">
+                                            <div class="input-group-btn">
+                                                <a name="addValidationByJsonBtn" class="btn btn-success" href="javascript:void(0);">Add By JSON</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-info form-horizontal">
+                                    <table class="table table-striped table-bordered checkPointValidationsTable">
+                                        <thead>
+                                            <th>Type</th>
+                                            <th>Operator</th>
+                                            <th>Name</th>
+                                            <th>Value</th>
+                                            <th>Description</th>
+                                            <th>action</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <select class="form-control" name="validateType">
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control" name="operator">
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input name="name" type="text" class="form-control" placeholder="name" value=""/>
+                                                </td>
+                                                <td>
+                                                    <input name="value" type="text" class="form-control" placeholder="expected value" value=""/>
+                                                </td>
+                                                <td>
+                                                    <input name="description" type="text" class="form-control" placeholder="error message" value=""/>
+                                                </td>
+                                                <td>
+                                                    <a name="delEntryBtn" class="btn btn-danger" href="javascript:void(0);">Del</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                            <!-- /.tab-pane -->
                         </div>
-                        <!-- /.tab-content -->
                     </div>
 
                     <div class="box-footer">
                         <button type="button" class="btn btn-info pull-left" data-dismiss="modal">Close</button>
-                        <button name="deleteGroup" type="button" class="btn btn-primary pull-right"><i class="fa fa-save"></i> Save</button>
+                        <button name="saveCheckPointBtn" type="button" class="btn btn-primary pull-right"><i
+                                class="fa fa-save"></i> Save
+                        </button>
                     </div>
                 </div>
 
@@ -189,19 +304,167 @@
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h4 class="modal-title">Add CheckPoint By JSON</h4>
                 </div>
-                    <div class="box-body">
-                        <div class="form-group">
-                            <label for="ipList">
-                                Sample download)
-                            </label>
-                            <textarea id="jsonContent" class="form-control" rows="10" placeholder="Enter ..."></textarea>
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="ipList">
+                            Sample download)
+                        </label>
+                        <textarea id="jsonContent" class="form-control" rows="10" placeholder="Enter ..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" name="saveCheckPointJson"><i class="fa fa-save"></i> Save
+                </button>
+            </div>
+        </div>
+    </div>
+</th:block>
+<th:block th:fragment="addCheckPointValidationByJsonModal">
+    <div id="addCheckPointValidationByJsonModal" class="modal modal-primary data-model">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 class="modal-title">Add Validations By JSON</h4>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="ipList">
+                            Sample download)
+                        </label>
+                        <textarea id="validationJsonContent" class="form-control" rows="10" placeholder="Enter ..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" name="saveCheckPointValidationsJson"><i class="fa fa-save"></i> Save
+                </button>
+            </div>
+        </div>
+    </div>
+</th:block>
+<th:block th:fragment="addHeaderByTextModal">
+    <div id="addHeaderByTextModal" class="modal modal-primary data-model">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 class="modal-title">Add Header By Text</h4>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="ipList">
+                            Sample download)
+                        </label>
+                        <textarea id="headerTextContent" class="form-control" rows="10" placeholder="Enter ...">
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,ko;q=0.7,ja;q=0.6
+Cookie: __jdu=15088430161521772345911;
+Cache-Control: no-cache
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36
+Referer: http://host.jd.com/pages/config/www.baidu.com/group</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" name="parseCheckPointHeaderBtn"><i class="fa fa-save"></i> Save
+                </button>
+            </div>
+        </div>
+    </div>
+</th:block>
+<th:block th:fragment="addParameterByTextModal">
+    <div id="addParameterByTextModal" class="modal modal-primary data-model">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 class="modal-title">Add Parameter By URL</h4>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="ipList">
+                            Copy url and paste here...
+                        </label>
+                        <textarea id="queryTextContent" class="form-control" rows="10" placeholder="Enter ...">query=name&amp;ie=utf-8</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" name="parseCheckPointParameterBtn"><i class="fa fa-save"></i> Save
+                </button>
+            </div>
+        </div>
+    </div>
+</th:block>
+<th:block th:fragment="addJobModal">
+    <div id="addJobModal" class="modal modal-primary data-model">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 class="modal-title">Add Job</h4>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="jobName" class="col-sm-2 control-label">Name</label>
+
+                        <div class="col-sm-10">
+                            <input id="jobName" name="jobName" type="text" class="form-control" placeholder="name"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="checkPointId" class="col-sm-2 control-label">CheckPoint</label>
+
+                        <div class="col-sm-10">
+                            <select id="checkPointId" name="checkPointId" class="form-control">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="checkPointId" class="col-sm-2 control-label">Groups</label>
+                        <div class="col-sm-10" name="groupList">
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" name="saveCheckPointJson"><i class="fa fa-save"></i> Save</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" name="saveJob"><i class="fa fa-save"></i> Save
+                </button>
+            </div>
+        </div>
+    </div>
+</th:block>
+<th:block th:fragment="addJobByJsonModal">
+    <div id="addJobByJsonModal" class="modal modal-primary data-model">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 class="modal-title">Add job By JSON</h4>
                 </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="ipList">
+                            Sample download)
+                        </label>
+                        <textarea id="jsonContent" class="form-control" rows="10"
+                                  placeholder="Enter json content..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" name="saveJobJson"><i class="fa fa-save"></i> Save
+                </button>
+            </div>
         </div>
     </div>
 </th:block>

@@ -56,6 +56,26 @@ public class ZkClient {
         return false;
     }
 
+    public List<JobWrapper> listJob(String domain) {
+        try {
+            String path = pathUtil.getServiceJobPath(domain);
+            List<JobWrapper> jobs = Lists.newArrayList();
+            List<String> list = listChildren(path);
+            if (CollectionUtils.isNotEmpty(list)) {
+                list.forEach(jobId -> {
+                    JobWrapper job = readJob(domain, jobId);
+                    if( job != null) {
+                        jobs.add(job);
+                    }
+                });
+            }
+            return jobs;
+        } catch (Exception e) {
+            log.error("list job wrapper error.", e);
+            return null;
+        }
+    }
+
     public JobWrapper readJob(String domain, String jobId) {
         try {
             String path = pathUtil.getServiceJobIdPath(domain, jobId);
