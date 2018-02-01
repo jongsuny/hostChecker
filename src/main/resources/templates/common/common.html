@@ -274,9 +274,24 @@
 <th:block th:fragment="footer">
     <footer class="footer">
         <div class="container">
-            <span class="text-muted">http://www.jd.com/</span>
+            <span class="text-muted">http://kimnote.com/</span>
         </div>
     </footer>
+</th:block>
+<th:block th:fragment="printJobResult (result)">
+    <div th:if="${result != null}" th:with="status =${ #strings.concat(result.status,'&lt;br/>')}" th:remove="tag">
+        <div th:with="statStr =${ #strings.concat('(',result.total,',',result.alive,','+result.invalid,',',result.down,')','&lt;br/>')}" th:remove="tag">
+            <div th:if="${result.lastRunDate != null}" th:with="dateStr =${ #dates.format(result.lastRunDate, 'yyyy/MM/dd HH:mm')}" th:remove="tag">
+                <td th:if="${result != null}" th:utext="${#strings.concat(status,statStr,dateStr)}">
+                </td>
+            </div>
+            <div th:if="${result.lastRunDate == null}" th:remove="tag">
+                <td th:if="${result != null}" th:utext="${#strings.concat(status,statStr)}">
+                </td>
+            </div>
+        </div>
+    </div>
+    <td th:if="${result == null}">NONE</td>
 </th:block>
 </body>
 </html>

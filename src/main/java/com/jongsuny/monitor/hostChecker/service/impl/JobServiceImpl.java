@@ -6,6 +6,8 @@ import com.jongsuny.monitor.hostChecker.domain.NodeResult;
 import com.jongsuny.monitor.hostChecker.domain.ServiceConfig;
 import com.jongsuny.monitor.hostChecker.domain.check.CheckPoint;
 import com.jongsuny.monitor.hostChecker.domain.job.Job;
+import com.jongsuny.monitor.hostChecker.domain.job.JobResult;
+import com.jongsuny.monitor.hostChecker.domain.job.JobStatus;
 import com.jongsuny.monitor.hostChecker.domain.job.JobWrapper;
 import com.jongsuny.monitor.hostChecker.repository.zookeeper.ZkClient;
 import com.jongsuny.monitor.hostChecker.service.HostChecker;
@@ -45,7 +47,15 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public JobWrapper readJob(String domain, String jobId) {
-        return zkClient.readJob(domain, jobId);
+        JobWrapper jobWrapper = zkClient.readJob(domain, jobId);
+        if(jobWrapper!= null && jobWrapper.getCheckPoint() != null) {
+            String checkPointId = jobWrapper.getCheckPoint().getId();
+            CheckPoint checkPoint = zkClient.readCheckPoint(domain, checkPointId);
+            if(checkPoint != null) {
+                jobWrapper.setCheckPoint(checkPoint);
+            }
+        }
+        return jobWrapper;
     }
 
     @Override
@@ -72,7 +82,33 @@ public class JobServiceImpl implements JobService {
         if (!initJob(job)) {
             return false;
         }
-        hostChecker.validateJob(job);
+        try {
+            updateJobToInited(job);
+            hostChecker.validateJob(job);
+        } finally {
+            JobResult jobResult = JobResult.getRegistered();
+            jobResult.setTotal(CollectionUtils.size(job.getIpList()));
+            jobResult.setStatus(JobStatus.FINISHED);
+            JobWrapper jobWrapper = readJob(domain, jobId);
+            jobWrapper.getResults().forEach((ip, nodeResult) -> {
+                switch (nodeResult.getNodeStatus()) {
+                    case ALIVE:
+                        jobResult.setAlive(jobResult.getAlive() + 1);
+                        break;
+                    case INVALID:
+                        jobResult.setInvalid(jobResult.getInvalid() + 1);
+                        break;
+                    case DOWN:
+                    case ERROR:
+                        jobResult.setDown(jobResult.getDown() + 1);
+                        break;
+                    default:
+                }
+            });
+            jobResult.setLastRunDate(new Date());
+            job.setJobResult(jobResult);
+            updateJob(job);
+        }
         return true;
     }
 
@@ -84,7 +120,23 @@ public class JobServiceImpl implements JobService {
                 return;
             }
         });
+
         return result.get();
+    }
+
+    private void updateJob(JobWrapper job) {
+        zkClient.updateJob(job);
+    }
+
+    private void updateJobToInited(JobWrapper job) {
+        JobResult jobResult = job.getJobResult();
+        if(jobResult == null) {
+            jobResult = JobResult.getRegistered();
+        }
+        jobResult.setTotal(job.getIpList().size());
+        jobResult.setStatus(JobStatus.INITIATED);
+        job.setJobResult(jobResult);
+        zkClient.updateJob(job);
     }
 
     private JobWrapper wrapJob(Job job) {
@@ -100,6 +152,9 @@ public class JobServiceImpl implements JobService {
             wrapper.setIpList(getGroupIPList(config.getGroups(), job.getGroups()));
             wrapper.setGroups(getGroupNames(config.getGroups(), job.getGroups()));
         }
+        JobResult result =JobResult.getRegistered();
+        result.setTotal(CollectionUtils.size(job.getIpList()));
+        wrapper.setJobResult(result);
         return wrapper;
     }
 
@@ -128,7 +183,7 @@ public class JobServiceImpl implements JobService {
                 result.add(groupFound.get().getGroupName());
             }
         });
-        return StringUtils.join(result,",");
+        return StringUtils.join(result, ",");
     }
 
     private List<String> getGroupIPList(List<Group> groups, List<String> groupIds) {

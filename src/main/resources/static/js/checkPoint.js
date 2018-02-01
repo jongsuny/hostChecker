@@ -1,5 +1,5 @@
 
-Class('com.jd.h5.check.checkPoint', {
+Class('com.jongsuny.check.checkPoint', {
     init : function(options) {
         var _this = this;
         _this._options = $.extend({
@@ -24,6 +24,7 @@ Class('com.jd.h5.check.checkPoint', {
     // event.
     _bindEvent : function() {
         var _this = this;
+        $.bindSampleInput();
         _this._bindModalShowBtnEvent();
         _this._bindAddByJsonBtnEvent();
         _this._bindEditBtnEvent();

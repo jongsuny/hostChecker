@@ -8,12 +8,12 @@ import lombok.Getter;
  * Created by jongsuny on 17/12/27.
  */
 @Getter
-public enum  JobStatus {
-    REGISTER("string"),
-    INITIATED("list"),
-    RUNNING("number"),
-    FINISHED("number"),
-    ERROR("number");
+public enum JobStatus {
+    REGISTER("REGISTER"),
+    INITIATED("INITIATED"),
+    RUNNING("RUNNING"),
+    FINISHED("FINISHED"),
+    ERROR("ERROR");
 
     private String code;
 

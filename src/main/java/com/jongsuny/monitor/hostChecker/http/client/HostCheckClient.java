@@ -13,8 +13,8 @@ import org.apache.http.impl.client.HttpClientBuilder;
 @Getter
 public class HostCheckClient {
     private DnsResolver dnsResolver;
-    private int CONNECT_TIME_OUT = 5000;
-    private int CONNECTION_REQUEST_TIME_OUT = 5000;
+    private int CONNECT_TIME_OUT = 10000;
+    private int CONNECTION_REQUEST_TIME_OUT = 10000;
     private int SOCKET_TIME_OUT = 10000;
 
     public HostCheckClient(DnsResolver dnsResolver) {

@@ -1,0 +1,118 @@
+[
+  {
+    "port": 80,
+    "method": "GET",
+    "name" : "搜索test测试",
+    "description" : "搜索test测试",
+    "schema": "http",
+    "path": "/s",
+    "headers": [
+      {
+        "name": "User-Agent",
+        "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36"
+      },
+      {
+        "name": "Accept-Language",
+        "value": "zh-CN,zh;q=0.9,en;q=0.8,ko;q=0.7,ja;q=0.6"
+      }
+    ],
+    "arguments": [
+      {
+        "name": "rsv_spt",
+        "value": "1"
+      },
+      {
+        "name": "wd",
+        "value": "test"
+      }
+    ],
+    "validations": [
+      {
+        "validateType": "STATUS_CODE",
+        "name": "",
+        "operator": "eq",
+        "value": "200",
+        "description": "return code is not 200"
+      },
+      {
+        "validateType": "header",
+        "name": "Content-Type",
+        "operator": "eq",
+        "value": "text/html;charset=utf-8",
+        "description": "content-type is not html"
+      },
+      {
+        "validateType": "body",
+        "name": "",
+        "operator": "contains",
+        "value": "html",
+        "description": "not html"
+      }
+    ]
+  },
+  {
+    "port": 443,
+    "method": "GET",
+    "schema": "https",
+    "name" : "搜索test测试 https",
+    "description" : "搜索test测试https",
+    "path": "/s",
+    "headers": [
+      {
+        "name": "User-Agent",
+        "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36"
+      },
+      {
+        "name": "Accept-Language",
+        "value": "zh-CN,zh;q=0.9,en;q=0.8,ko;q=0.7,ja;q=0.6"
+      }
+    ],
+    "arguments": [
+      {
+        "name": "rsv_spt",
+        "value": "1"
+      },
+      {
+        "name": "wd",
+        "value": "test"
+      }
+    ],
+    "validations": [
+      {
+        "validateType": "STATUS_CODE",
+        "name": "",
+        "operator": "eq",
+        "value": "200",
+        "description": "return code is not 200"
+      },
+      {
+        "validateType": "resp_time",
+        "name": "",
+        "operator": "le",
+        "value": "500",
+        "description": "process time is over 500ms"
+      },
+      {
+        "validateType": "header",
+        "name": "Content-Type",
+        "operator": "eq",
+        "value": "text/html;charset=utf-8",
+        "description": "content-type is not html"
+      },
+      {
+        "validateType": "header",
+        "name": "Content-Type",
+        "operator": "in",
+        "value": "",
+        "description": "content-type is not exists"
+      },
+      {
+        "validateType": "body",
+        "name": "",
+        "operator": "contains",
+        "value": "html",
+        "description": "not html"
+      }
+    ]
+  }
+]

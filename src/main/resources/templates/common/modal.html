@@ -53,7 +53,7 @@
                             <label for="ipList">
                                 Ex1) ip,hostname,description<br/>127.0.0.1,localhost,localhost description<br/>
                                 Ex2)ip1\n ip2<br/>127.0.0.1<br/>10.0.0.1<br/>
-                                Ex3)json<br/>[{"ip":"127.0.0.1","hostname":"hostname","description":"some description"}]
+                                Ex3)json<br/><a href="javascript:void(0)" class="btn btn-primary sampleInput" data-name="node" data-selector="#ipList">[{"ip":"127.0.0.1","hostname":"hostname","description":"some description"}]</a>
                             </label>
                             <input type="hidden" class="form-control" id="addMultipleNodeGroupId"/>
                             <textarea id="ipList" class="form-control" rows="10" placeholder="Enter ..."></textarea>
@@ -306,8 +306,8 @@
                 </div>
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="ipList">
-                            Sample download)
+                        <label for="jsonContent" >
+                            <a href="javascript:void(0)" class="btn btn-primary sampleInput" data-name="checkPoint" data-selector="#jsonContent" >Sample input)</a>
                         </label>
                         <textarea id="jsonContent" class="form-control" rows="10" placeholder="Enter ..."></textarea>
                     </div>
@@ -331,8 +331,8 @@
                 </div>
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="ipList">
-                            Sample download)
+                        <label for="validationJsonContent" >
+                            <a href="javascript:void(0)" class="btn btn-primary sampleInput" data-name="validation" data-selector="#validationJsonContent">Sample input)</a>
                         </label>
                         <textarea id="validationJsonContent" class="form-control" rows="10" placeholder="Enter ..."></textarea>
                     </div>
@@ -356,17 +356,10 @@
                 </div>
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="ipList">
-                            Sample download)
+                        <label for="headerTextContent">
+                            <a href="javascript:void(0)" class="btn btn-primary sampleInput" data-name="header" data-selector="#headerTextContent">Sample input)</a>
                         </label>
-                        <textarea id="headerTextContent" class="form-control" rows="10" placeholder="Enter ...">
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
-Accept-Encoding: gzip, deflate
-Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,ko;q=0.7,ja;q=0.6
-Cookie: __jdu=15088430161521772345911;
-Cache-Control: no-cache
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36
-Referer: http://host.jd.com/pages/config/www.baidu.com/group</textarea>
+                        <textarea id="headerTextContent" class="form-control" rows="10" placeholder="Enter ..."></textarea>
                     </div>
                 </div>
             </div>
@@ -452,8 +445,8 @@ Referer: http://host.jd.com/pages/config/www.baidu.com/group</textarea>
                 </div>
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="ipList">
-                            Sample download)
+                        <label for="jsonContent">
+                            <a href="javascript:void(0)" class="btn btn-primary sampleInput" data-name="job" data-selector="#jsonContent">Sample input)</a>
                         </label>
                         <textarea id="jsonContent" class="form-control" rows="10"
                                   placeholder="Enter json content..."></textarea>
@@ -464,6 +457,148 @@ Referer: http://host.jd.com/pages/config/www.baidu.com/group</textarea>
                 <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" name="saveJobJson"><i class="fa fa-save"></i> Save
                 </button>
+            </div>
+        </div>
+    </div>
+</th:block>
+<th:block th:fragment="jobResultModal">
+    <div id="jobResultModal" class="modal modal-primary data-model">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content job">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 name="jobName" class="modal-title">Job result</h4>
+                </div>
+                <div class="box-header with-border">
+                    <h3 class="box-title">Quick Utilities</h3>
+                    <div class="box-tools">
+                        <div class="input-group input-group-sm" style="width: 100px;">
+                            <div class="input-group-btn">
+                                <a name="refreshJobResultBtn" class="btn btn-success btn-pull-right" href="javascript:void(0);">Refresh</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-info form-horizontal">
+                    <table class="table table-striped table-bordered jobResultTable">
+                        <thead>
+                        <th>ID</th>
+                        <th>IP addr</th>
+                        <th>Status</th>
+                        <th>StartDate</th>
+                        <th>Time(ms)</th>
+                        <th>Detail</th>
+                        </thead>
+                        <tbody>
+                        <tr>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+<th:block th:fragment="nodeDetailModal">
+    <div id="nodeDetailModal" class="modal modal-primary data-model">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content job">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 name="jobName" class="modal-title">Node validation result</h4>
+                </div>
+                <div class="form-horizontal">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#nodeResult" data-toggle="tab">Basic</a></li>
+                            <li><a href="#nodeResultHeader" data-toggle="tab">ResponseHeaders</a></li>
+                            <li><a href="#responseValidations" data-toggle="tab">Validations</a></li>
+                            <li><a href="#responseBody" data-toggle="tab">ResponseBody</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="nodeResult">
+                                <div class="box-info form-horizontal">
+                                    <div class="form-group">
+                                        <label for="checkPointName" class="col-sm-2 control-label">Time</label>
+                                        <div class="col-sm-10">
+                                            <input name="time" type="text" class="form-control" readonly="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="checkPointName" class="col-sm-2 control-label">Name</label>
+                                        <div class="col-sm-10">
+                                            <input name="name" type="text" class="form-control" readonly="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="checkPointDescription" class="col-sm-2 control-label">Group</label>
+                                        <div class="col-sm-10">
+                                            <input name="group" type="text" class="form-control" readonly="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="checkPointMethod" class="col-sm-2 control-label">IP</label>
+                                        <div class="col-sm-10">
+                                            <input name="ip" type="text" class="form-control" readonly="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="checkPointSchema" class="col-sm-2 control-label">status</label>
+                                        <div class="col-sm-10">
+                                            <input name="status" type="text" class="form-control" readonly="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="checkPointPort" class="col-sm-2 control-label">ResponseTime</label>
+                                        <div class="col-sm-10">
+                                            <input name="rt" type="text" class="form-control" readonly="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="checkPointPort" class="col-sm-2 control-label">url</label>
+                                        <div class="col-sm-10">
+                                            <input name="url" type="text" class="form-control" readonly="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="checkPointPort" class="col-sm-2 control-label">StatusCode</label>
+                                        <div class="col-sm-10">
+                                            <input name="code" type="text" class="form-control" readonly="true"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.tab-pane -->
+                            <div class="tab-pane check-point" id="nodeResultHeader">
+                                <div class="box-info form-horizontal">
+                                </div>
+                            </div>
+                            <!-- /.tab-pane -->
+                            <div class="tab-pane check-point" id="responseValidations">
+                                <div class="box-info form-horizontal">
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                        <th>#id</th>
+                                        <th>result</th>
+                                        <th>ValidateType</th>
+                                        <th>Name</th>
+                                        <th>Operator</th>
+                                        <th>Expected</th>
+                                        <th>Actual</th>
+                                        <th>Description</th>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane check-point" id="responseBody">
+                                <div class="box-info form-horizontal">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

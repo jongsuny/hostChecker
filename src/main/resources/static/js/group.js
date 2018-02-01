@@ -1,5 +1,5 @@
 
-Class('com.jd.h5.check.group', {
+Class('com.jongsuny.check.group', {
     init : function(options) {
         var _this = this;
         _this._options = $.extend({
@@ -21,6 +21,7 @@ Class('com.jd.h5.check.group', {
     // event.
     _bindEvent : function() {
         var _this = this;
+        $.bindSampleInput();
         _this._bindSaveGroupBtnEvent();
         _this._bindDeleteGroupBtnEvent();
         _this._bindCreateGroupBtnEvent();

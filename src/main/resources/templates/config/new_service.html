@@ -71,7 +71,7 @@
                     <div id="service_config_all" class="box-body">
                         <div class="form-group">
                             <label for="jsonContent">
-                                Sample download)
+                                <a href="javascript:void(0)" class="btn btn-success sampleInput" data-name="service" data-selector="#jsonContent">Sample input)</a>
                             </label>
                             <textarea id="jsonContent" class="form-control" rows="10" placeholder="Enter JSON..."></textarea>
                         </div>
@@ -89,7 +89,7 @@
 <th:block th:include="common/script :: script_more"></th:block>
 <script type="text/javascript" src="/js/serviceAdd.js"></script>
 <script th:inline="javascript">
-    new com.jd.h5.check.addService({serviceConfig : null});
+    new com.jongsuny.check.addService({serviceConfig : null});
 </script>
 </body>
 </html>

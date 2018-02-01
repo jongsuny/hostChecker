@@ -6,6 +6,18 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+    <style>
+
+        /* Important part */
+        .job .box-info{
+            max-height: 350px;
+            overflow-y: auto;
+        }
+        .modal-dialog {
+            width: 800px;
+            margin: 30px auto;
+        }
+    </style>
     <th:block th:include="common/header :: headerCommonCss"></th:block>
     <th:block th:include="common/script :: script_common"></th:block>
 </head>
@@ -19,6 +31,8 @@
                 <div class="col-md-12">
                     <th:block th:include="common/modal :: addJobModal"></th:block>
                     <th:block th:include="common/modal :: addJobByJsonModal"></th:block>
+                    <th:block th:include="common/modal :: jobResultModal"></th:block>
+                    <th:block th:include="common/modal :: nodeDetailModal"></th:block>
                     <div class="row">
                         <div class="box box-primary">
                             <div class="box-header with-border">
@@ -48,6 +62,7 @@
                                         <th>CheckName</th>
                                         <th>Groups</th>
                                         <th>Created</th>
+                                        <th>Status<br/>(total,alive,invalid,down)<br/>LastRunDate</th>
                                         <th>action</th>
                                     </tr>
                                     <tr th:each="job,stat : *{serviceConfig.jobs}" th:id="${job.jobId}">
@@ -55,10 +70,12 @@
                                         <td th:text="${job.jobName}"></td>
                                         <td th:text="${job.checkPoint.name}"></td>
                                         <td th:text="${job.groups}"></td>
-                                        <td th:text="${job.registerDate}"></td>
+                                        <td th:text="${#dates.format(job.registerDate, 'yyyy/MM/dd HH:mm')}"></td>
+                                        <div th:replace="common/common :: printJobResult(${job.jobResult})"></div>
                                         <td>
                                             <a target="_blank" name="runJob" class="btn btn-success btn-pull-right" th:attr="data-job-id=${job.jobId}"
-                                               th:href="@{/config/job/{domain}/run(domain=${job.domain},jobId=${job.jobId})}">Run Job</a>
+                                               th:href="@{/config/job/{domain}/run(domain=${job.domain},jobId=${job.jobId})}">Run</a>
+                                            <a name="readJobBtn" class="btn btn-success btn-pull-right" th:attr="data-job-id=${job.jobId}">Result</a>
                                             <a name="deleteJob" class="btn btn-danger btn-pull-right" th:attr="data-job-id=${job.jobId}"
                                                href="javascript:void(0);">Delete</a>
                                         </td>
@@ -80,7 +97,7 @@
 <th:block th:include="common/script :: script_more"></th:block>
 <script type="text/javascript" src="/js/Job.js"></script>
 <script th:inline="javascript">
-    new com.jd.h5.check.Job({serviceConfig: [[${serviceConfig}]]});
+    new com.jongsuny.check.Job({serviceConfig: [[${serviceConfig}]]});
 </script>
 </body>
 </html>

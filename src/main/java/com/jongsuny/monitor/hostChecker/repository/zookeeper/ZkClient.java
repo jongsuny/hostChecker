@@ -56,6 +56,21 @@ public class ZkClient {
         return false;
     }
 
+    public boolean updateJob(JobWrapper jobWrapper) {
+        try {
+            JobWrapper old = readJob(jobWrapper.getDomain(), jobWrapper.getJobId());
+            if (old == null) {
+                return false;
+            }
+            String path = pathUtil.getServiceJobIdPath(jobWrapper.getDomain(), jobWrapper.getJobId());
+            Stat result = updateData(path, jobWrapper);
+            return result != null;
+        } catch (Exception e) {
+            log.error("update job wrapper error.", e);
+        }
+        return false;
+    }
+
     public List<JobWrapper> listJob(String domain) {
         try {
             String path = pathUtil.getServiceJobPath(domain);

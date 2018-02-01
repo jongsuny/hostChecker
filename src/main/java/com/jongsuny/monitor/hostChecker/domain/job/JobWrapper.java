@@ -27,5 +27,6 @@ public class JobWrapper {
     private String groups;
     private List<String> ipList;
     private CheckPoint checkPoint;
+    private JobResult jobResult;
     private Map<String, NodeResult> results;
 }

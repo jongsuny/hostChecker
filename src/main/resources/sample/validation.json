@@ -1,0 +1,23 @@
+[
+  {
+    "validateType": "STATUS_CODE",
+    "name": "",
+    "operator": "eq",
+    "value": "200",
+    "description": "return code is not 200"
+  },
+  {
+    "validateType": "header",
+    "name": "Content-Type",
+    "operator": "eq",
+    "value": "text/html;charset=utf-8",
+    "description": "content-type is not html"
+  },
+  {
+    "validateType": "body",
+    "name": "",
+    "operator": "contains",
+    "value": "html",
+    "description": "not html"
+  }
+]
